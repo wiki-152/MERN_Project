@@ -72,6 +72,9 @@ A comprehensive online platform combining property rentals and marketplace for v
 
 ## How to Run the Project
 
+npx nodemon server.js   # (for backend)
+npm run dev OR npm start   # (for frontend)
+
 ## Commands
 
 mkdir frontend backend
