@@ -82,4 +82,20 @@ npm init -y
 cd ..
 
 cd frontend
+npm create vite@latest . OR npx create-react-app .
+npm install axios react-router-dom
+npm run dev  # (for Vite)
+npm start    # (for Create React App)
+
+cd ../backend
+npm install express mongoose dotenv cors
+npm install body-parser
+npm install bcrypt
+npm install crypto
+npm install --save-dev nodemon
+
+mkdir config controllers middleware models routes services utils
+touch app.js server.js .env
+
+
 
