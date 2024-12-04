@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-// required fields: name, email, password more to be added
+// required fields: name, email, password more to be added for registration
 
 const ListingOwnerSchema = new mongoose.Schema({
     name: { type: String, required: true },
