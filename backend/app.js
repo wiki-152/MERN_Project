@@ -13,6 +13,7 @@ app.use(express.json());
 
 app.use('/api/admin', require('./routes/admin'));
 app.use('/api/user', require('./routes/user'));
+app.use('/api/listingOwner', require('./routes/listingOwner'));
 
 // Example route
 app.get('/', (req, res) => {
