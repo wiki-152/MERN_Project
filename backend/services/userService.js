@@ -51,32 +51,10 @@ exports.getUserProfile = async (userId) => {
 
 // Update User Profile------------------------------------------------------------------------------------------------------------ needs to be updated
 exports.updateUserProfile = async (userId, updateData) => {
-    const user = await User.findById(userId);
-    if (!user) return null;
-
-    if (updateData.name) user.name = updateData.name;
-
-    if (updateData.preferences) {
-        user.preferences.genres = updateData.preferences.genres || user.preferences.genres;
-        user.preferences.actors = updateData.preferences.actors || user.preferences.actors;
-        user.preferences.directors = updateData.preferences.directors || user.preferences.directors;
-        user.preferences.favoriteMovies = updateData.preferences.favoriteMovies || user.preferences.favoriteMovies;
-    }
-
-    if (updateData.wishlist) {
-        user.wishlist = updateData.wishlist;
-    }
-
-    if (typeof updateData.emailNotificationsEnabled !== 'undefined') {
-        user.emailNotificationsEnabled = updateData.emailNotificationsEnabled;
-    }
-
-    if (updateData.password) {
-        user.password = updateData.password; 
-    }
-
-    return await user.save();
+    // Use findByIdAndUpdate to directly update the user document in the database
+    return await User.findByIdAndUpdate(userId, updateData, { new: true });
 };
+
 
 
 // Delete User Profile
