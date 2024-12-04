@@ -69,14 +69,10 @@ exports.getUserProfile = async (req, res) => {
 
 // Validation Schema------------------------------------------------------------------------------------------------------------ needs to be updated
 const updateUserProfileSchema = yup.object().shape({
-    name: yup.string().min(3, 'Name must be at least 3 characters long').max(50, 'Name must be at most 50 characters long'),
-    preferences: yup.object().shape({
-        genres: yup.array().of(yup.string()).optional(),
-        actors: yup.array().of(yup.string()).optional(),
-        directors: yup.array().of(yup.string()).optional(),
-        favoriteMovies: yup.array().of(yup.string()).optional(),
-    }),
-    wishlist: yup.array().of(yup.string()).optional(),
+    name: yup.string().min(3, 'Name must be at least 3 characters long').max(50, 'Name must be at most 50 characters long').optional(),
+    phone: yup.string().optional(), // Allow phone number to be updated
+    profilePicture: yup.string().optional(), // Allow profile picture URL to be updated
+    isHost: yup.boolean().optional(), // Allow isHost status to be updated
     emailNotificationsEnabled: yup.boolean().optional(),
     password: yup.string().min(6, 'Password must be at least 6 characters long').optional(),
 });
@@ -99,6 +95,7 @@ exports.updateUserProfile = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
 // Delete User Profile
 exports.deleteUserProfile = async (req, res) => {
     try {
