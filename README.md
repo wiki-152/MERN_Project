@@ -95,10 +95,15 @@ npm install express mongoose dotenv cors
 npm install body-parser
 npm install bcrypt
 npm install crypto
+npm install jsonwebtoken
+npm install yup
+npm install nodemailer
 npm install --save-dev nodemon
 
 mkdir config controllers middleware models routes services utils
 touch app.js server.js .env
 
+## Working of Backend 
 
+routes->middleware->controller->services->model
 
