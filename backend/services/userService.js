@@ -51,7 +51,13 @@ exports.getUserProfile = async (userId) => {
 
 // Update User Profile------------------------------------------------------------------------------------------------------------ needs to be updated
 exports.updateUserProfile = async (userId, updateData) => {
-    // Use findByIdAndUpdate to directly update the user document in the database
+    // Hash the password if it's being updated
+    if (updateData.password) {
+        const salt = await bcrypt.genSalt(10);
+        updateData.password = await bcrypt.hash(updateData.password, salt);
+    }
+
+    // Use findByIdAndUpdate to directly update the user document
     return await User.findByIdAndUpdate(userId, updateData, { new: true });
 };
 
