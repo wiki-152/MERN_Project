@@ -107,3 +107,11 @@ touch app.js server.js .env
 
 routes->middleware->controller->services->model
 
+## Commands To Create Files 
+
+New-Item -Path "README.md" -ItemType "File"
+
+New-Item -Path "Component.jsx" -ItemType "File"
+New-Item -Path "Component.css" -ItemType "File"
+New-Item -Path "Component.test.js" -ItemType "File"
+
