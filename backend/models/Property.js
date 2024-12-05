@@ -16,7 +16,16 @@ const PropertySchema = new mongoose.Schema({
     listedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // User who listed the property
     assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null }, // User who rented the property
     createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now },
+    totalRooms: { type: Number },
+    rentPrice: { type: Number},
+    address: {
+        street: { type: String, trim: true },
+        propertyNumber: { type: String, trim: true }, // e.g., "12A"
+        area: { type: String, trim: true }, // e.g., "Downtown"
+        city: { type: String, trim: true }, // e.g., "New York"
+        state: { type: String, trim: true }, // e.g., "NY"
+        postalCode: { type: String, trim: true }, // e.g., "10001"
+    }
 });
 
 module.exports = mongoose.model('Property', PropertySchema);

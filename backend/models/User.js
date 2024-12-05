@@ -37,6 +37,9 @@ const UserSchema = new mongoose.Schema({
         },
     ],
     emailNotificationsEnabled: { type: Boolean, default: true },
+    createdAt: { type: Date, default: Date.now },
+    isVerified: { type: Boolean, default: false },
+    
 });
 
 // Hash password before saving
