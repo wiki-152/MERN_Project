@@ -37,6 +37,8 @@ const useUserStore = create((set) => ({
         }
     },
 
+    isAuthenticated: (get) => !!get().user, // Returns true if a user is logged in
+
     // Logout action
     logout: () => {
         set({ user: null, isAuthenticated: false, error: null }); // Reset user state
