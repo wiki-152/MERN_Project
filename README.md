@@ -86,7 +86,7 @@ cd ..
 
 cd frontend
 npm create vite@latest . OR npx create-react-app .
-npm install axios react-router-dom
+npm install axios react-router-dom zustand
 npm run dev  # (for Vite)
 npm start    # (for Create React App)
 
