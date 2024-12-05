@@ -7,16 +7,14 @@ const PropertySchema = new mongoose.Schema({
     pricePerNight: { type: Number, required: true },
     images: [{ type: String }], // URLs of property images
     amenities: [{ type: String }], // List of amenities (e.g., WiFi, Pool, etc.)
-    availability: [
-        {
-            startDate: { type: Date },
-            endDate: { type: Date },
-        },
-    ],
+    availabilityDate: { 
+        type: Date,
+        default: null
+    },
     listedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // User who listed the property
     assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null }, // User who rented the property
     createdAt: { type: Date, default: Date.now },
-    totalRooms: { type: Number },
+    numberOfRooms: { type: Number },
     rentPrice: { type: Number},
     address: {
         street: { type: String, trim: true },
@@ -25,7 +23,78 @@ const PropertySchema = new mongoose.Schema({
         city: { type: String, trim: true }, // e.g., "New York"
         state: { type: String, trim: true }, // e.g., "NY"
         postalCode: { type: String, trim: true }, // e.g., "10001"
-    }
+    },
+    propertyType: {
+        type: String,
+        enum: [
+            // Residential
+            'single-family-home',
+            'multi-family-home',
+            'apartment',
+            'condo',
+            'townhouse',
+            'villa',
+            'cottage',
+            'mobile-home',
+            'mansion',
+            'co-living-space',
+            'penthouse',
+    
+            // Commercial
+            'office-buildings-high-rise',
+            'office-buildings-low-rise',
+            'office-buildings-business-park',
+            'retail-shopping-mall',
+            'retail-supermarket',
+            'retail-standalone-store',
+            'hotel',
+            'resort',
+            'industrial-park',
+    
+            // Industrial
+            'factory',
+            'warehouse',
+            'distribution-center',
+            'cold-storage',
+    
+            // Agricultural
+            'farmland',
+            'ranch',
+            'orchard',
+            'vineyard',
+    
+            // Mixed-Use
+            'mixed-use-development',
+            'live-work-space',
+    
+            // Recreational
+            'vacation-home',
+            'cabin',
+            'recreational-resort',
+            'campground',
+    
+            // Special-Purpose
+            'hospital',
+            'clinic',
+            'school',
+            'church',
+            'stadium',
+            'cemetery',
+    
+            // Luxury
+            'private-island',
+            'estate',
+            'floating-home',
+    
+            // Land
+            'raw-land',
+            'developed-land',
+            'subdivision',
+    
+            // Shared Spaces
+            'shared-room',
+        ],
+    },
 });
 
 module.exports = mongoose.model('Property', PropertySchema);
