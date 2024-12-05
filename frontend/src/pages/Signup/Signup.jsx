@@ -1,23 +1,248 @@
-import React from 'react';
+// Logic with Zustand
+import React, { useState } from 'react';
+import useUserStore from '../../stores/userStore';
 import './Signup.css';
 
 const Signup = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+    });
+
+    const { signup, loading, error } = useUserStore();
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Signup logic
+        signup(formData);
     };
 
     return (
         <div className="signup-page">
             <h2>Sign Up</h2>
+            {loading && <p>Loading...</p>}
+            {error && <p className="error-message">{error}</p>}
             <form onSubmit={handleSubmit}>
-                <input type="text" placeholder="Full Name" required />
-                <input type="email" placeholder="Email" required />
-                <input type="password" placeholder="Password" required />
-                <button type="submit">Sign Up</button>
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Full Name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                />
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                />
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                />
+                <button type="submit" disabled={loading}>
+                    {loading ? 'Signing Up...' : 'Sign Up'}
+                </button>
             </form>
         </div>
     );
 };
 
 export default Signup;
+
+
+// All in One 
+
+// import React, { useState } from 'react';
+// import axios from 'axios'; // For making HTTP requests
+// import './Signup.css';
+
+// const Signup = () => {
+//   // State to hold form input values
+//   const [formData, setFormData] = useState({
+//     name: '',
+//     email: '',
+//     password: '',
+//   });
+
+//   // State to display success or error messages
+//   const [message, setMessage] = useState('');
+//   const [error, setError] = useState('');
+
+//   // Handle input changes
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData({ ...formData, [name]: value });
+//   };
+
+//   // Handle form submission
+//   const handleSubmit = async (e) => {
+//     e.preventDefault(); // Prevent default form submission behavior
+
+//     try {
+//       // Send POST request to the backend
+//       const response = await axios.post('http://localhost:2469/api/user/register', formData);
+
+//       // If successful, display a success message
+//       setMessage('Registration successful! You can now log in.');
+//       setError(''); // Clear any previous error
+//     } catch (err) {
+//       // Handle errors (e.g., validation issues, server errors)
+//       setError(err.response?.data?.message || 'An error occurred during registration.');
+//       setMessage(''); // Clear any success message
+//     }
+//   };
+
+//   return (
+//     <div className="signup-page">
+//       <h2>Sign Up</h2>
+
+//       {message && <p className="success-message">{message}</p>}
+//       {error && <p className="error-message">{error}</p>}
+
+//       <form onSubmit={handleSubmit}>
+//         <input
+//           type="text"
+//           name="name"
+//           placeholder="Full Name"
+//           value={formData.name}
+//           onChange={handleChange}
+//           required
+//         />
+//         <input
+//           type="email"
+//           name="email"
+//           placeholder="Email"
+//           value={formData.email}
+//           onChange={handleChange}
+//           required
+//         />
+//         <input
+//           type="password"
+//           name="password"
+//           placeholder="Password"
+//           value={formData.password}
+//           onChange={handleChange}
+//           required
+//         />
+//         <button type="submit">Sign Up</button>
+//       </form>
+//     </div>
+//   );
+// };
+
+// export default Signup;
+
+
+
+
+// Logic with Hooks
+
+// import React, { useState } from 'react';
+// import useSignup from '../../hooks/useSignup';
+// import './Signup.css';
+
+// const Signup = () => {
+//     const [formData, setFormData] = useState({
+//         name: '',
+//         email: '',
+//         password: '',
+//     });
+
+//     const { signup, loading, error } = useSignup();
+
+//     const handleChange = (e) => {
+//         const { name, value } = e.target;
+//         setFormData({ ...formData, [name]: value });
+//     };
+
+//     const handleSubmit = async (e) => {
+//         e.preventDefault();
+//         const result = await signup(formData);
+//         if (result) {
+//             console.log('Signup successful:', result);
+//         }
+//     };
+
+//     return (
+//         <div className="signup-page">
+//             <h2>Sign Up</h2>
+
+//             {loading && <p>Loading...</p>}
+//             {error && <p className="error-message">{error}</p>}
+
+//             <form onSubmit={handleSubmit}>
+//                 <input
+//                     type="text"
+//                     name="name"
+//                     placeholder="Full Name"
+//                     value={formData.name}
+//                     onChange={handleChange}
+//                     required
+//                 />
+//                 <input
+//                     type="email"
+//                     name="email"
+//                     placeholder="Email"
+//                     value={formData.email}
+//                     onChange={handleChange}
+//                     required
+//                 />
+//                 <input
+//                     type="password"
+//                     name="password"
+//                     placeholder="Password"
+//                     value={formData.password}
+//                     onChange={handleChange}
+//                     required
+//                 />
+//                 <button type="submit" disabled={loading}>
+//                     {loading ? 'Signing Up...' : 'Sign Up'}
+//                 </button>
+//             </form>
+//         </div>
+//     );
+// };
+
+// export default Signup;
+
+
+
+
+// Old Orignal 
+
+// import React from 'react';
+// import './Signup.css';
+
+// const Signup = () => {
+//     const handleSubmit = (e) => {
+//         e.preventDefault();
+//         // Signup logic
+//     };
+
+//     return (
+//         <div className="signup-page">
+//             <h2>Sign Up</h2>
+//             <form onSubmit={handleSubmit}>
+//                 <input type="text" placeholder="Full Name" required />
+//                 <input type="email" placeholder="Email" required />
+//                 <input type="password" placeholder="Password" required />
+//                 <button type="submit">Sign Up</button>
+//             </form>
+//         </div>
+//     );
+// };
+
+// export default Signup;
