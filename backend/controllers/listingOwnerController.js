@@ -23,6 +23,7 @@ exports.registerListingOwner = async (req, res) => {
 
         const { token, message } = await listingOwnerService.registerListingOwner(name, email, password);
         res.json({ token, message });
+        console.log("LO Registration Successful");
     } catch (error) {
         console.error('Validation Error:', error); // Log the complete error object
         if (error.name === 'ValidationError') {
@@ -44,6 +45,7 @@ exports.loginListingOwner = async (req, res) => {
 
         const { token, message } = await listingOwnerService.loginListingOwner(email, password);
         res.json({ token, message });
+        console.log("LO Login Successful");
     } catch (error) {
         if (error.name === 'ValidationError') {
             return res.status(400).json({ message: error.errors.join(', ') });
@@ -65,6 +67,7 @@ exports.getListingOwnerProfile = async (req, res) => {
             return res.status(404).json({ message: 'Listing Owner not found' });
         }
         res.json(listingOwner);
+        console.log("LO Profile Fetched Successfully");
     } catch (error) {
         console.error('Error fetching Listing Owner profile:', error.message);
         res.status(500).json({ message: 'Server error' });
@@ -97,6 +100,7 @@ exports.updateListingOwnerProfile = async (req, res) => {
         }
 
         res.json({ message: 'Profile updated successfully', listingOwner: updatedListingOwner });
+        console.log("LO Profile Updated Successfully");
     } catch (error) {
         if (error.name === 'ValidationError') {
             return res.status(400).json({ message: error.errors.join(', ') });
@@ -117,6 +121,7 @@ exports.deleteListingOwnerProfile = async (req, res) => {
         }
 
         res.json({ message: 'Profile deleted successfully' });
+        console.log("LO Profile Deleted Successfully");
     } catch (error) {
         console.error('Error deleting Listing Owner profile:', error.message);
         res.status(500).json({ message: 'Server error' });

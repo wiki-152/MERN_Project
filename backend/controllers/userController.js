@@ -22,6 +22,7 @@ exports.registerUser = async (req, res) => {
 
         const { token, message } = await userService.registerUser(name, email, password);
         res.json({ token, message });
+        console.log("Registration Successful");
     } catch (error) {
         console.error('Validation Error:', error); // Log the complete error object
         if (error.name === 'ValidationError') {
@@ -44,6 +45,7 @@ exports.loginUser = async (req, res) => {
 
         const { token, message } = await userService.loginUser(email, password);
         res.json({ token, message });
+        console.log("Login Successful");
     } catch (error) {
         if (error.name === 'ValidationError') {
             return res.status(400).json({ message: error.errors.join(', ') });
@@ -61,6 +63,7 @@ exports.getUserProfile = async (req, res) => {
         const user = await userService.getUserProfile(req.user.id);
         if (!user) return res.status(404).json({ message: 'User not found' });
         res.json(user);
+        console.log("Profile Fetched Successfully");
     } catch (error) {
         console.error('Error fetching profile:', error.message);
         res.status(500).json({ message: 'Server error' });
@@ -103,6 +106,7 @@ exports.deleteUserProfile = async (req, res) => {
         if (!deletedUser) return res.status(404).json({ message: 'User not found' });
 
         res.json({ message: 'Profile deleted successfully' });
+        console.log("Profile Deleted Successfully");
     } catch (error) {
         console.error('Error deleting profile:', error.message);
         res.status(500).json({ message: 'Server error' });
