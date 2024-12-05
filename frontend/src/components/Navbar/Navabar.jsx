@@ -36,7 +36,6 @@ const Navbar = () => {
                 ) : (
                     <li className="dropdown">
                         <button className="dropdown-btn">
-                            {/* Use optional chaining or fallback */}
                             {isCustomerAuthenticated ? user?.name || 'Customer' : listingOwner?.name || 'Seller'} <span>▼</span>
                         </button>
                         <div className="dropdown-menu">

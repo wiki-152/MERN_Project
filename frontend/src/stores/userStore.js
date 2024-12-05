@@ -1,20 +1,22 @@
 import { create } from 'zustand';
 import axios from 'axios';
+import useListingOwnerStore from './listingOwnerStore'; // Import the seller store
 
-const API_BASE_URL = 'http://localhost:2469/api/user'; // Define the base URL for the API
+const API_BASE_URL = 'http://localhost:2469/api/user';
 
 const useUserStore = create((set) => ({
-    user: null, // Stores the authenticated user's data
-    isAuthenticated: false, // Tracks if the user is logged in
-    loading: false, // Tracks loading state
-    error: null, // Tracks any error messages
+    user: null,
+    isAuthenticated: false,
+    loading: false,
+    error: null,
 
     // Signup action
     signup: async (formData) => {
         try {
-            set({ loading: true, error: null }); // Set loading to true and clear errors
-            const response = await axios.post(`${API_BASE_URL}/register`, formData); // Use the variable
+            set({ loading: true, error: null });
+            const response = await axios.post(`${API_BASE_URL}/register`, formData);
             set({ user: response.data, isAuthenticated: true, loading: false });
+            useListingOwnerStore.getState().logout(); // Reset seller state
         } catch (err) {
             set({
                 error: err.response?.data?.message || 'Signup failed. Please try again.',
@@ -26,8 +28,8 @@ const useUserStore = create((set) => ({
     // Login action
     login: async (credentials) => {
         try {
-            set({ loading: true, error: null }); // Set loading to true and clear errors
-            const response = await axios.post(`${API_BASE_URL}/login`, credentials); // Use the variable
+            set({ loading: true, error: null });
+            const response = await axios.post(`${API_BASE_URL}/login`, credentials);
             set({ user: response.data, isAuthenticated: true, loading: false });
         } catch (err) {
             set({
@@ -37,14 +39,17 @@ const useUserStore = create((set) => ({
         }
     },
 
-    isAuthenticated: (get) => !!get().user, // Returns true if a user is logged in
+    
 
     // Logout action
-    logout: () => {
-        set({ user: null, isAuthenticated: false, error: null }); // Reset user state
+    logout: (fromListingOwner = false) => {
+        set({ user: null, isAuthenticated: false, error: null });
+        if (!fromListingOwner) {
+            useListingOwnerStore.getState().logout(true);
+        }
     },
 
-    clearError: () => set({ error: null }), // Method to clear errors
+    clearError: () => set({ error: null }),
 }));
 
 export default useUserStore;
