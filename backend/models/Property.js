@@ -94,6 +94,7 @@ const PropertySchema = new mongoose.Schema({
             // Shared Spaces
             'shared-room',
         ],
+        areaInSquareMeters: { type: Number }, // Area of the room in square meters
     },
 });
 
