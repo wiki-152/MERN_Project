@@ -13,7 +13,7 @@ export default function PropertyGallery({ images }) {
   };
 
   return (
-    <div className="relative">
+    <div className="relative bg-gray-800">
       {/* Main Image */}
       <div className="relative h-[400px] w-full overflow-hidden">
         <img
@@ -43,7 +43,7 @@ export default function PropertyGallery({ images }) {
       </div>
 
       {/* Thumbnails */}
-      <div className="mt-4 flex gap-2 overflow-x-auto pb-2">
+      {/* <div className="mt-4 flex gap-2 overflow-x-auto pb-2">
         {images.map((image, index) => (
           <button
             key={index}
@@ -59,7 +59,7 @@ export default function PropertyGallery({ images }) {
             />
           </button>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }

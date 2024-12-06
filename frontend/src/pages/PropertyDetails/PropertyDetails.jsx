@@ -5,7 +5,7 @@ import PropertyDescription from '../../components/Properties/PropertyDescription
 import img1 from '../../assets/images/property_sample_1.jpg';
 import img2 from '../../assets/images/property_sample_2.jpg';
 import img3 from '../../assets/images/property_sample_3.jpg';
-
+import ContactForm from '../../components/ContactSend/ContactSend';
 
 // This data would come from your backend
 const mockData = {
@@ -23,7 +23,7 @@ const mockData = {
 
 export default function PropertyDetails() {
   return (
-    <div className="mx-auto max-w-6xl p-4">
+    <div className="mx-auto p-8 bg-gray-800">
       <div className="space-y-8">
         <PropertyGallery images={mockData.images} />
         <PropertyHeader
@@ -34,6 +34,8 @@ export default function PropertyDetails() {
         />
         <PropertyDescription description={mockData.description} />
       </div>
+
+      <ContactForm />
     </div>
   );
 }
