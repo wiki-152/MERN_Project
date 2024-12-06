@@ -3,9 +3,47 @@
 import { Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
 import { Benefits } from '../../components/Benefits/Benefits'
+import useUserStore from '../../stores/userStore'
+import useListingOwnerStore from '../../stores/listingOwnerStore'
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
+  const [credentials, setCredentials] = useState({
+    email: '',
+    password: '',
+  })
+
+  // Zustand stores
+  const {
+    login: loginCustomer,
+    loading: loadingCustomer,
+    error: errorCustomer,
+    clearError: clearCustomerError,
+  } = useUserStore()
+
+  const {
+    login: loginSeller,
+    loading: loadingSeller,
+    error: errorSeller,
+    clearError: clearSellerError,
+  } = useListingOwnerStore()
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setCredentials({ ...credentials, [name]: value })
+  }
+
+  const handleCustomerLogin = (e) => {
+    e.preventDefault()
+    clearSellerError()
+    loginCustomer(credentials)
+  }
+
+  const handleSellerLogin = (e) => {
+    e.preventDefault()
+    clearCustomerError()
+    loginSeller(credentials)
+  }
 
   return (
     <div className="min-h-screen bg-gray-800 text-gray-100">
@@ -15,7 +53,14 @@ export default function LoginPage() {
           <div className="flex flex-col justify-between space-y-6">
             <div>
               <h2 className="text-2xl font-bold mb-6">Login to your account</h2>
-              <form className="space-y-4">
+              {/* Display errors */}
+              {errorCustomer && (
+                <div className="mb-4 text-red-500">{errorCustomer}</div>
+              )}
+              {errorSeller && (
+                <div className="mb-4 text-red-500">{errorSeller}</div>
+              )}
+              <form className="space-y-4" onSubmit={handleCustomerLogin}>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium">
                     Email address
@@ -23,6 +68,9 @@ export default function LoginPage() {
                   <input
                     type="email"
                     id="email"
+                    name="email"
+                    value={credentials.email}
+                    onChange={handleChange}
                     className="mt-1 w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-white focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-500"
                   />
                 </div>
@@ -34,6 +82,9 @@ export default function LoginPage() {
                     <input
                       type={showPassword ? 'text' : 'password'}
                       id="password"
+                      name="password"
+                      value={credentials.password}
+                      onChange={handleChange}
                       className="w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-white focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-500"
                     />
                     <button
@@ -60,14 +111,25 @@ export default function LoginPage() {
                     Remember me
                   </label>
                 </div>
+                <div className="flex gap-4">
+                  <button
+                    type="submit"
+                    disabled={loadingCustomer}
+                    className="flex-1 rounded-md bg-gray-700 px-4 py-2 font-semibold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50"
+                  >
+                    {loadingCustomer ? 'Signing in...' : 'Sign in as Customer'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleSellerLogin}
+                    disabled={loadingSeller}
+                    className="flex-1 rounded-md bg-gray-700 px-4 py-2 font-semibold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50"
+                  >
+                    {loadingSeller ? 'Signing in...' : 'Sign in as Seller'}
+                  </button>
+                </div>
               </form>
             </div>
-            <button
-              type="submit"
-              className="w-full rounded-md bg-gray-700 px-4 py-2 font-semibold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-900"
-            >
-              Sign in
-            </button>
           </div>
 
           {/* Register Section */}
