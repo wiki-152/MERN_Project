@@ -9,6 +9,7 @@ import Properties from './components/Properties/PropertiesHome';
 import Marketplace from './components/Marketplace/Marrketplace';
 import PropertyDetails from './pages/PropertyDetails/PropertyDetails';
 import PropertyCard from './components/PropertyCard/PropertyCard';
+import Profile from './components/Profile/Profile';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         {/* Property Details Update -----------------------------------------*/}
         <Route path="/property-details" element={<PropertyDetails />} />
         <Route path="/property-card" element={<PropertyCard />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
 
       {/* Footer appears on all pages */}
