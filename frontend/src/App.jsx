@@ -4,6 +4,7 @@ import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
 import Navbar from './components/Navbar/Navabar'; // Import the Navbar component
+import Footer from './components/Footer/Footer'; // Import the Footer component
 import Properties from './components/Properties/PropertiesHome';
 import Marketplace from './components/Marketplace/Marrketplace';
 import PropertyDetails from './pages/PropertyDetails/PropertyDetails';
@@ -27,6 +28,9 @@ function App() {
         <Route path="/property-details" element={<PropertyDetails />} />
         <Route path="/property-card" element={<PropertyCard />} />
       </Routes>
+
+      {/* Footer appears on all pages */}
+      <Footer />
     </Router>
   );
 }
