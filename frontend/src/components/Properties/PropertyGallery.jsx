@@ -15,7 +15,7 @@ export default function PropertyGallery({ images }) {
   return (
     <div className="relative bg-gray-800">
       {/* Main Image */}
-      <div className="relative h-[400px] w-full overflow-hidden">
+      <div className="relative h-[400px] w-full overflow-hidden rounded-lg">
         <img
           src={images[currentImage]}
           alt={`Property view ${currentImage + 1}`}
