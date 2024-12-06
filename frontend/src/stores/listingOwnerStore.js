@@ -6,6 +6,7 @@ const API_BASE_URL = 'http://localhost:2469/api/listingOwner';
 
 const useListingOwnerStore = create((set) => ({
     listingOwner: null,
+    token: null, // Store the token here
     isAuthenticated: false,
     loading: false,
     error: null,
@@ -15,7 +16,12 @@ const useListingOwnerStore = create((set) => ({
         try {
             set({ loading: true, error: null });
             const response = await axios.post(`${API_BASE_URL}/register`, formData);
-            set({ listingOwner: response.data, isAuthenticated: true, loading: false });
+            set({
+                listingOwner: response.data.listingOwner,
+                token: response.data.token,
+                isAuthenticated: true,
+                loading: false,
+            });
             useUserStore.getState().logout(); // Reset customer state
         } catch (err) {
             set({
@@ -30,7 +36,12 @@ const useListingOwnerStore = create((set) => ({
         try {
             set({ loading: true, error: null });
             const response = await axios.post(`${API_BASE_URL}/login`, credentials);
-            set({ listingOwner: response.data, isAuthenticated: true, loading: false });
+            set({
+                listingOwner: response.data.listingOwner,
+                token: response.data.token,
+                isAuthenticated: true,
+                loading: false,
+            });
         } catch (err) {
             set({
                 error: err.response?.data?.message || 'Login failed. Please try again.',
@@ -41,7 +52,12 @@ const useListingOwnerStore = create((set) => ({
 
     // Logout action
     logout: (fromUserStore = false) => {
-        set({ listingOwner: null, isAuthenticated: false, error: null });
+        set({
+            listingOwner: null,
+            token: null,
+            isAuthenticated: false,
+            error: null,
+        });
         if (!fromUserStore) {
             useUserStore.getState().logout(true);
         }

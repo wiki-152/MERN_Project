@@ -48,13 +48,14 @@ const Login = () => {
     return (
         <div className="login-page">
             <h2>Login</h2>
-            
+
+           
             {/* Display errors or loading states */}
             {loadingCustomer && <p>Loading Customer Login...</p>}
             {errorCustomer && <p className="error-message">{errorCustomer}</p>}
             {loadingSeller && <p>Loading Seller Login...</p>}
             {errorSeller && <p className="error-message">{errorSeller}</p>}
-
+            
             <form>
                 <input
                     type="email"
