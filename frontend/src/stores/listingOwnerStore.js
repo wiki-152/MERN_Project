@@ -42,11 +42,13 @@ const useListingOwnerStore = create((set) => ({
                 isAuthenticated: true,
                 loading: false,
             });
+            return true;
         } catch (err) {
             set({
                 error: err.response?.data?.message || 'Login failed. Please try again.',
                 loading: false,
             });
+            return false;
         }
     },
 

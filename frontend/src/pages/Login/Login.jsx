@@ -5,8 +5,10 @@ import { useState } from 'react'
 import { Benefits } from '../../components/Benefits/Benefits'
 import useUserStore from '../../stores/userStore'
 import useListingOwnerStore from '../../stores/listingOwnerStore'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function LoginPage() {
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const [credentials, setCredentials] = useState({
     email: '',
@@ -33,16 +35,22 @@ export default function LoginPage() {
     setCredentials({ ...credentials, [name]: value })
   }
 
-  const handleCustomerLogin = (e) => {
+  const handleCustomerLogin = async (e) => {
     e.preventDefault()
     clearSellerError()
-    loginCustomer(credentials)
+    const success = await loginCustomer(credentials)
+    if (success) {
+      navigate('/')
+    }
   }
 
-  const handleSellerLogin = (e) => {
+  const handleSellerLogin = async (e) => {
     e.preventDefault()
     clearCustomerError()
-    loginSeller(credentials)
+    const success = await loginSeller(credentials)
+    if (success) {
+      navigate('/')
+    }
   }
 
   return (
@@ -140,12 +148,12 @@ export default function LoginPage() {
                 Create an account now and enjoy exclusive benefits with your first order.
               </p>
             </div>
-            <button
-              type="button"
-              className="w-full rounded-md bg-gray-700 px-4 py-2 font-semibold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+            <Link
+              to="/signup"
+              className="w-full rounded-md bg-gray-700 px-4 py-2 font-semibold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-900 text-center block"
             >
               Register now
-            </button>
+            </Link>
           </div>
         </div>
 
