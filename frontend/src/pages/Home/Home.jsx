@@ -4,7 +4,7 @@ import homeImage from '../../assets/images/homeImage.jpg';
 
 export default function HomePage() {
   return (
-    <div className="relative min-h-[80vh] bg-gray-900">
+    <div className="relative min-h-screen bg-gray-900">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
@@ -21,12 +21,12 @@ export default function HomePage() {
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl mb-8 text-center">
           Welcome to{" "}
           <span className="inline-block bg-emerald-400 px-4 text-black">
-            RealEstate Hub
+            Tiefen Reich
           </span>
         </h1>
 
         <p className="text-xl text-gray-300 mb-12 text-center max-w-2xl">
-          Discover your perfect property or explore our marketplace for all your real estate needs.
+          Discover your perfect property or explore our marketplace for all your needs.
         </p>
 
         {/* Navigation Buttons */}
