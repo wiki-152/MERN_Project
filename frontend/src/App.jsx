@@ -4,6 +4,8 @@ import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
 import Navbar from './components/Navbar/Navabar'; // Import the Navbar component
+import Properties from './components/Properties/Propertes';
+import Marketplace from './components/Marketplace/Marrketplace';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/properties" element={<Properties />} />
+        <Route path="/marketplace" element={<Marketplace />} />
       </Routes>
     </Router>
   );
