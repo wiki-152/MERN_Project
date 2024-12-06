@@ -1,347 +1,158 @@
-// Logic with Zustand for both User and Listing Owner
-import React, { useState } from 'react';
-import useUserStore from '../../stores/userStore';
-import useListingOwnerStore from '../../stores/listingOwnerStore';
-import './Signup.css';
+import { Eye, EyeOff } from 'lucide-react'
+import { useState } from 'react'
+import { Benefits } from '../../components/Benefits/Benefits'
+import useUserStore from '../../stores/userStore'
+import useListingOwnerStore from '../../stores/listingOwnerStore'
+import './Signup.css'
 
-const Signup = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        password: '',
-    });
+export default function SignupPage() {
+  const [showPassword, setShowPassword] = useState(false)
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+  })
 
-    // Zustand stores for customers and listing owners
-    const {
-        signup: signupCustomer,
-        loading: loadingCustomer,
-        error: errorCustomer,
-        clearError: clearCustomerError, // Add a method to clear errors
-    } = useUserStore();
+  // Zustand stores
+  const {
+    signup: signupCustomer,
+    loading: loadingCustomer,
+    error: errorCustomer,
+    clearError: clearCustomerError,
+  } = useUserStore()
 
-    const {
-        signup: signupSeller,
-        loading: loadingSeller,
-        error: errorSeller,
-        clearError: clearSellerError, // Add a method to clear errors
-    } = useListingOwnerStore();
+  const {
+    signup: signupSeller,
+    loading: loadingSeller,
+    error: errorSeller,
+    clearError: clearSellerError,
+  } = useListingOwnerStore()
 
-    // Handle input changes
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+  }
 
-    // Handle signup as customer
-    const handleCustomerSignup = (e) => {
-        e.preventDefault();
-        clearSellerError(); // Clear seller error before customer signup
-        signupCustomer(formData);
-    };
+  const handleCustomerSignup = (e) => {
+    e.preventDefault()
+    clearSellerError()
+    signupCustomer(formData)
+  }
 
-    // Handle signup as seller
-    const handleSellerSignup = (e) => {
-        e.preventDefault();
-        clearCustomerError(); // Clear customer error before seller signup
-        signupSeller(formData);
-    };
+  const handleSellerSignup = (e) => {
+    e.preventDefault()
+    clearCustomerError()
+    signupSeller(formData)
+  }
 
-    return (
-        <div className="signup-page">
-            <h2>Sign Up</h2>
-            
-            {/* Display errors or loading states */}
-            {loadingCustomer && <p>Loading Customer Signup...</p>}
-            {errorCustomer && <p className="error-message">{errorCustomer}</p>}
-            {loadingSeller && <p>Loading Seller Signup...</p>}
-            {errorSeller && <p className="error-message">{errorSeller}</p>}
-
-            <form>
-                <input
+  return (
+    <div className="min-h-screen bg-gray-800 text-gray-100">
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid gap-8 md:grid-cols-2 md:divide-x md:divide-gray-700">
+          {/* Signup Section */}
+          <div className="flex flex-col justify-between space-y-6">
+            <div>
+              <h2 className="text-2xl font-bold mb-6">Create your account</h2>
+              {/* Display errors */}
+              {errorCustomer && (
+                <div className="mb-4 text-red-500">{errorCustomer}</div>
+              )}
+              {errorSeller && (
+                <div className="mb-4 text-red-500">{errorSeller}</div>
+              )}
+              <form className="space-y-4" onSubmit={handleCustomerSignup}>
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium">
+                    Full Name
+                  </label>
+                  <input
                     type="text"
+                    id="name"
                     name="name"
-                    placeholder="Full Name"
                     value={formData.name}
                     onChange={handleChange}
+                    className="mt-1 w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-white focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-500"
                     required
-                />
-                <input
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium">
+                    Email address
+                  </label>
+                  <input
                     type="email"
+                    id="email"
                     name="email"
-                    placeholder="Email"
                     value={formData.email}
                     onChange={handleChange}
+                    className="mt-1 w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-white focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-500"
                     required
-                />
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                />
+                  />
+                </div>
+                <div>
+                  <label htmlFor="password" className="block text-sm font-medium">
+                    Password
+                  </label>
+                  <div className="relative mt-1">
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      id="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      className="w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-white focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-500"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-300"
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <button
+                    type="submit"
+                    disabled={loadingCustomer}
+                    className="flex-1 rounded-md bg-gray-700 px-4 py-2 font-semibold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50"
+                  >
+                    {loadingCustomer ? 'Signing up...' : 'Sign up as Customer'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleSellerSignup}
+                    disabled={loadingSeller}
+                    className="flex-1 rounded-md bg-gray-700 px-4 py-2 font-semibold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50"
+                  >
+                    {loadingSeller ? 'Signing up...' : 'Sign up as Seller'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
 
-                {/* Two separate signup buttons */}
-                <button type="button" onClick={handleCustomerSignup} disabled={loadingCustomer}>
-                    {loadingCustomer ? 'Signing Up as Customer...' : 'Signup as Customer'}
-                </button>
-                <button type="button" onClick={handleSellerSignup} disabled={loadingSeller}>
-                    {loadingSeller ? 'Signing Up as Seller...' : 'Signup as Seller'}
-                </button>
-            </form>
+          {/* Benefits Section */}
+          <div className="flex flex-col justify-between space-y-6 md:pl-8">
+            <div>
+              <h2 className="text-2xl font-bold mb-6">Already have an account?</h2>
+              <p className="text-gray-400">
+                Log in to your account to enjoy exclusive benefits.
+              </p>
+            </div>
+            <button
+              type="button"
+              className="w-full rounded-md bg-gray-700 px-4 py-2 font-semibold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+            >
+              Log in now
+            </button>
+          </div>
         </div>
-    );
-};
 
-export default Signup;
-
-
-// // Logic with Zustand
-// import React, { useState } from 'react';
-// import useUserStore from '../../stores/userStore';
-// import './Signup.css';
-
-// const Signup = () => {
-//     const [formData, setFormData] = useState({
-//         name: '',
-//         email: '',
-//         password: '',
-//     });
-
-//     const { signup, loading, error } = useUserStore();
-
-//     const handleChange = (e) => {
-//         const { name, value } = e.target;
-//         setFormData({ ...formData, [name]: value });
-//     };
-
-//     const handleSubmit = (e) => {
-//         e.preventDefault();
-//         signup(formData);
-//     };
-
-//     return (
-//         <div className="signup-page">
-//             <h2>Sign Up</h2>
-//             {loading && <p>Loading...</p>}
-//             {error && <p className="error-message">{error}</p>}
-//             <form onSubmit={handleSubmit}>
-//                 <input
-//                     type="text"
-//                     name="name"
-//                     placeholder="Full Name"
-//                     value={formData.name}
-//                     onChange={handleChange}
-//                     required
-//                 />
-//                 <input
-//                     type="email"
-//                     name="email"
-//                     placeholder="Email"
-//                     value={formData.email}
-//                     onChange={handleChange}
-//                     required
-//                 />
-//                 <input
-//                     type="password"
-//                     name="password"
-//                     placeholder="Password"
-//                     value={formData.password}
-//                     onChange={handleChange}
-//                     required
-//                 />
-//                 <button type="submit" disabled={loading}>
-//                     {loading ? 'Signing Up...' : 'Sign Up'}
-//                 </button>
-//             </form>
-//         </div>
-//     );
-// };
-
-// export default Signup;
-
-
-// All in One 
-
-// import React, { useState } from 'react';
-// import axios from 'axios'; // For making HTTP requests
-// import './Signup.css';
-
-// const Signup = () => {
-//   // State to hold form input values
-//   const [formData, setFormData] = useState({
-//     name: '',
-//     email: '',
-//     password: '',
-//   });
-
-//   // State to display success or error messages
-//   const [message, setMessage] = useState('');
-//   const [error, setError] = useState('');
-
-//   // Handle input changes
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData({ ...formData, [name]: value });
-//   };
-
-//   // Handle form submission
-//   const handleSubmit = async (e) => {
-//     e.preventDefault(); // Prevent default form submission behavior
-
-//     try {
-//       // Send POST request to the backend
-//       const response = await axios.post('http://localhost:2469/api/user/register', formData);
-
-//       // If successful, display a success message
-//       setMessage('Registration successful! You can now log in.');
-//       setError(''); // Clear any previous error
-//     } catch (err) {
-//       // Handle errors (e.g., validation issues, server errors)
-//       setError(err.response?.data?.message || 'An error occurred during registration.');
-//       setMessage(''); // Clear any success message
-//     }
-//   };
-
-//   return (
-//     <div className="signup-page">
-//       <h2>Sign Up</h2>
-
-//       {message && <p className="success-message">{message}</p>}
-//       {error && <p className="error-message">{error}</p>}
-
-//       <form onSubmit={handleSubmit}>
-//         <input
-//           type="text"
-//           name="name"
-//           placeholder="Full Name"
-//           value={formData.name}
-//           onChange={handleChange}
-//           required
-//         />
-//         <input
-//           type="email"
-//           name="email"
-//           placeholder="Email"
-//           value={formData.email}
-//           onChange={handleChange}
-//           required
-//         />
-//         <input
-//           type="password"
-//           name="password"
-//           placeholder="Password"
-//           value={formData.password}
-//           onChange={handleChange}
-//           required
-//         />
-//         <button type="submit">Sign Up</button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default Signup;
-
-
-
-
-// Logic with Hooks
-
-// import React, { useState } from 'react';
-// import useSignup from '../../hooks/useSignup';
-// import './Signup.css';
-
-// const Signup = () => {
-//     const [formData, setFormData] = useState({
-//         name: '',
-//         email: '',
-//         password: '',
-//     });
-
-//     const { signup, loading, error } = useSignup();
-
-//     const handleChange = (e) => {
-//         const { name, value } = e.target;
-//         setFormData({ ...formData, [name]: value });
-//     };
-
-//     const handleSubmit = async (e) => {
-//         e.preventDefault();
-//         const result = await signup(formData);
-//         if (result) {
-//             console.log('Signup successful:', result);
-//         }
-//     };
-
-//     return (
-//         <div className="signup-page">
-//             <h2>Sign Up</h2>
-
-//             {loading && <p>Loading...</p>}
-//             {error && <p className="error-message">{error}</p>}
-
-//             <form onSubmit={handleSubmit}>
-//                 <input
-//                     type="text"
-//                     name="name"
-//                     placeholder="Full Name"
-//                     value={formData.name}
-//                     onChange={handleChange}
-//                     required
-//                 />
-//                 <input
-//                     type="email"
-//                     name="email"
-//                     placeholder="Email"
-//                     value={formData.email}
-//                     onChange={handleChange}
-//                     required
-//                 />
-//                 <input
-//                     type="password"
-//                     name="password"
-//                     placeholder="Password"
-//                     value={formData.password}
-//                     onChange={handleChange}
-//                     required
-//                 />
-//                 <button type="submit" disabled={loading}>
-//                     {loading ? 'Signing Up...' : 'Sign Up'}
-//                 </button>
-//             </form>
-//         </div>
-//     );
-// };
-
-// export default Signup;
-
-
-
-
-// Old Orignal 
-
-// import React from 'react';
-// import './Signup.css';
-
-// const Signup = () => {
-//     const handleSubmit = (e) => {
-//         e.preventDefault();
-//         // Signup logic
-//     };
-
-//     return (
-//         <div className="signup-page">
-//             <h2>Sign Up</h2>
-//             <form onSubmit={handleSubmit}>
-//                 <input type="text" placeholder="Full Name" required />
-//                 <input type="email" placeholder="Email" required />
-//                 <input type="password" placeholder="Password" required />
-//                 <button type="submit">Sign Up</button>
-//             </form>
-//         </div>
-//     );
-// };
-
-// export default Signup;
+        {/* Benefits Section */}
+        <Benefits />
+      </div>
+    </div>
+  )
+}
