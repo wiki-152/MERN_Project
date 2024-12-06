@@ -1,6 +1,7 @@
-// Logic with Zustand
+// Logic with Zustand for both User and Listing Owner
 import React, { useState } from 'react';
 import useUserStore from '../../stores/userStore';
+import useListingOwnerStore from '../../stores/listingOwnerStore';
 import './Signup.css';
 
 const Signup = () => {
@@ -10,24 +11,52 @@ const Signup = () => {
         password: '',
     });
 
-    const { signup, loading, error } = useUserStore();
+    // Zustand stores for customers and listing owners
+    const {
+        signup: signupCustomer,
+        loading: loadingCustomer,
+        error: errorCustomer,
+        clearError: clearCustomerError, // Add a method to clear errors
+    } = useUserStore();
 
+    const {
+        signup: signupSeller,
+        loading: loadingSeller,
+        error: errorSeller,
+        clearError: clearSellerError, // Add a method to clear errors
+    } = useListingOwnerStore();
+
+    // Handle input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    // Handle signup as customer
+    const handleCustomerSignup = (e) => {
         e.preventDefault();
-        signup(formData);
+        clearSellerError(); // Clear seller error before customer signup
+        signupCustomer(formData);
+    };
+
+    // Handle signup as seller
+    const handleSellerSignup = (e) => {
+        e.preventDefault();
+        clearCustomerError(); // Clear customer error before seller signup
+        signupSeller(formData);
     };
 
     return (
         <div className="signup-page">
             <h2>Sign Up</h2>
-            {loading && <p>Loading...</p>}
-            {error && <p className="error-message">{error}</p>}
-            <form onSubmit={handleSubmit}>
+            
+            {/* Display errors or loading states */}
+            {loadingCustomer && <p>Loading Customer Signup...</p>}
+            {errorCustomer && <p className="error-message">{errorCustomer}</p>}
+            {loadingSeller && <p>Loading Seller Signup...</p>}
+            {errorSeller && <p className="error-message">{errorSeller}</p>}
+
+            <form>
                 <input
                     type="text"
                     name="name"
@@ -52,8 +81,13 @@ const Signup = () => {
                     onChange={handleChange}
                     required
                 />
-                <button type="submit" disabled={loading}>
-                    {loading ? 'Signing Up...' : 'Sign Up'}
+
+                {/* Two separate signup buttons */}
+                <button type="button" onClick={handleCustomerSignup} disabled={loadingCustomer}>
+                    {loadingCustomer ? 'Signing Up as Customer...' : 'Signup as Customer'}
+                </button>
+                <button type="button" onClick={handleSellerSignup} disabled={loadingSeller}>
+                    {loadingSeller ? 'Signing Up as Seller...' : 'Signup as Seller'}
                 </button>
             </form>
         </div>
@@ -61,6 +95,71 @@ const Signup = () => {
 };
 
 export default Signup;
+
+
+// // Logic with Zustand
+// import React, { useState } from 'react';
+// import useUserStore from '../../stores/userStore';
+// import './Signup.css';
+
+// const Signup = () => {
+//     const [formData, setFormData] = useState({
+//         name: '',
+//         email: '',
+//         password: '',
+//     });
+
+//     const { signup, loading, error } = useUserStore();
+
+//     const handleChange = (e) => {
+//         const { name, value } = e.target;
+//         setFormData({ ...formData, [name]: value });
+//     };
+
+//     const handleSubmit = (e) => {
+//         e.preventDefault();
+//         signup(formData);
+//     };
+
+//     return (
+//         <div className="signup-page">
+//             <h2>Sign Up</h2>
+//             {loading && <p>Loading...</p>}
+//             {error && <p className="error-message">{error}</p>}
+//             <form onSubmit={handleSubmit}>
+//                 <input
+//                     type="text"
+//                     name="name"
+//                     placeholder="Full Name"
+//                     value={formData.name}
+//                     onChange={handleChange}
+//                     required
+//                 />
+//                 <input
+//                     type="email"
+//                     name="email"
+//                     placeholder="Email"
+//                     value={formData.email}
+//                     onChange={handleChange}
+//                     required
+//                 />
+//                 <input
+//                     type="password"
+//                     name="password"
+//                     placeholder="Password"
+//                     value={formData.password}
+//                     onChange={handleChange}
+//                     required
+//                 />
+//                 <button type="submit" disabled={loading}>
+//                     {loading ? 'Signing Up...' : 'Sign Up'}
+//                 </button>
+//             </form>
+//         </div>
+//     );
+// };
+
+// export default Signup;
 
 
 // All in One 
