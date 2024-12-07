@@ -88,6 +88,7 @@ cd frontend
 npm create vite@latest . OR npx create-react-app .
 npm install axios react-router-dom zustand
 npm install @radix-ui/react-checkbox @radix-ui/react-radio-group @radix-ui/react-select @radix-ui/react-slider lucide-react
+npm install @heroicons/react
 npx shadcn@latest init
 npx shadcn@latest add button input select checkbox label radio-group slider (not used)
 For Tailwind CSS
