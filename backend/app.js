@@ -14,6 +14,7 @@ app.use(express.json());
 app.use('/api/admin', require('./routes/admin'));
 app.use('/api/user', require('./routes/user'));
 app.use('/api/listingOwner', require('./routes/listingOwner'));
+app.use('/api/property', require('./routes/property'));
 
 // Example route
 app.get('/', (req, res) => {

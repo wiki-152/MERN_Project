@@ -1,17 +1,19 @@
 const mongoose = require('mongoose');
 
+// Add required fields
+
 const PropertySchema = new mongoose.Schema({
-    title: { type: String, required: true },
-    description: { type: String, required: true },
-    location: { type: String, required: true },
-    pricePerNight: { type: Number, required: true },
+    title: { type: String },
+    description: { type: String },
+    location: { type: String },
+    pricePerNight: { type: Number },
     images: [{ type: String }], // URLs of property images
     amenities: [{ type: String }], // List of amenities (e.g., WiFi, Pool, etc.)
     availabilityDate: { 
         type: Date,
         default: null
     },
-    listedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // User who listed the property
+    listedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // User who listed the property
     assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null }, // User who rented the property
     createdAt: { type: Date, default: Date.now },
     numberOfRooms: { type: Number },
