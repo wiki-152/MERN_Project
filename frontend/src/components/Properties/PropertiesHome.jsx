@@ -24,15 +24,21 @@ export default function HomePage() {
         {/* Hero Text */}
         <h1 className="mx-auto max-w-4xl text-center text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
           Advertise{" "}
-          <span className="inline-block bg-emerald-400 px-4 text-black">
-            your property
+          <span className="relative inline-block px-4">
+            <span className="relative z-10 text-black">your property</span>
+            <span 
+              className="absolute -inset-2 -rotate-2 bg-emerald-400 transform"
+              style={{
+                clipPath: "polygon(0% 0%, 100% 2%, 98% 98%, 2% 100%)"
+              }}
+            ></span>
           </span>{" "}
           where most are searching
         </h1>
 
         {/* Search Form */}
         <div className="mx-auto mt-12 max-w-6xl rounded-lg bg-gray-800 p-4 shadow-lg">
-          {/* Rent/Buy Tabs */}
+          {/* Rent/Buy/Per Night Tabs */}
           <div className="mb-6 border-b border-gray-700">
             <div className="flex gap-6">
               <button
@@ -54,6 +60,16 @@ export default function HomePage() {
                 onClick={() => setPropertyType('buy')}
               >
                 Buy
+              </button>
+              <button
+                className={`pb-2 font-medium ${
+                  propertyType === 'perNight'
+                    ? 'border-b-2 border-emerald-400 text-white'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+                onClick={() => setPropertyType('perNight')}
+              >
+                Per Night
               </button>
             </div>
           </div>
@@ -85,7 +101,7 @@ export default function HomePage() {
             {/* Price Range */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-300">
-                {propertyType === 'rent' ? 'CHF to' : 'CHF'}
+                {propertyType === 'rent' ? 'CHF to' : 'CHF to'}
               </label>
               <select className="w-full rounded-md bg-gray-700 py-2 pl-3 pr-10 text-white focus:outline-none focus:ring-2 focus:ring-emerald-400">
                 <option value="any">any</option>
