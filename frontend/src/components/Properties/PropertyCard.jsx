@@ -11,7 +11,7 @@ export default function PropertyCard({ property }) {
     location,
     rooms,
     area,
-    images, // Changed from imagess to images
+    images,
     propertyType,
   } = property;
 
@@ -39,9 +39,9 @@ export default function PropertyCard({ property }) {
   return (
     <Link to={`/properties/${_id}`}>
       <PropertyCardLayout>
-        <div className="w-1/3 relative">
-          {/* Main Image */}
-          <div className="h-[160px] relative">
+        <div className="w-1/4 relative">
+          {/* Upper Section: Main Image and Navigation Arrows */}
+          <div className="h-[200px] relative">
             <img
               src={images?.[currentImageIndex] || '/placeholder.svg'}
               alt={`${title} - Image ${currentImageIndex + 1}`}
@@ -55,7 +55,7 @@ export default function PropertyCard({ property }) {
             >
               <ChevronLeftIcon className="h-5 w-5 text-white" />
             </button>
-            <button
+            <button 
               onClick={nextImage}
               className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-1 hover:bg-black/75"
             >
@@ -63,23 +63,26 @@ export default function PropertyCard({ property }) {
             </button>
           </div>
 
-          {/* Thumbnail Preview */}
-          <div className="absolute bottom-0 flex h-[40px] w-full gap-1 bg-black/30 p-1">
-            {images?.slice(0, 4).map((url, index) => (
-              <button
-                key={index}
-                onClick={(e) => selectImage(index, e)}
-                className={`h-full flex-1 overflow-hidden ${
-                  currentImageIndex === index ? 'ring-2 ring-emerald-400' : ''
-                }`}
-              >
-                <img
-                  src={url}
-                  alt={`Thumbnail ${index + 1}`}
-                  className="h-full w-full object-cover"
-                />
-              </button>
-            ))}
+          {/* Lower Section: Thumbnail Preview */}
+          <div className="absolute bottom-0 left-0 right-0 flex h-[40px] gap-1 bg-black/30 p-1">
+            {Array.from({ length: 3 }).map((_, index) => {
+              const url = images?.[index] || '/placeholder.svg'; // Use placeholder if no image
+              return (
+                <button
+                  key={index}
+                  onClick={(e) => selectImage(index, e)}
+                  className={`h-full flex-1 overflow-hidden ${
+                    currentImageIndex === index ? 'ring-2 ring-emerald-400' : ''
+                  }`}
+                >
+                  <img
+                    src={url}
+                    alt={`Thumbnail ${index + 1}`}
+                    className="h-full w-full object-cover"
+                  />
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -105,3 +108,4 @@ export default function PropertyCard({ property }) {
     </Link>
   );
 }
+

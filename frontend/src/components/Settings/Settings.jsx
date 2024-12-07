@@ -13,7 +13,7 @@ export default function Settings() {
   const renderContent = () => {
     switch (activeSection) {
       case 'profile':
-        return <SecuritySettings />
+        return <ProfileSettings />
       case 'security':
         return <div>Security Settings</div>
       case 'visibility':
