@@ -3,16 +3,43 @@ const propertyService = require('../services/propertyService');
 
 // Validation schema for property
 const propertySchema = yup.object().shape({
-    title: yup.string().required(),
-    description: yup.string().required(),
-    price: yup.number().required().positive(),
-    location: yup.string().required(),
-    propertyType: yup.string().required(),
-    bedrooms: yup.number().required().positive().integer(),
-    bathrooms: yup.number().required().positive(),
-    area: yup.number().required().positive(),
-    // Add more fields as needed
+    title: yup.string().required("Title is required."),
+    description: yup.string().required("Description is required."),
+    location: yup.string().required("Location is required."),
+    pricePerNight: yup.number().nullable().positive("Price per night must be positive."),
+    rentPrice: yup.number().required("Rent price is required.").positive("Rent price must be positive."),
+    images: yup.array().of(yup.string().url("Each image must be a valid URL.")),
+    amenities: yup.array().of(yup.string("Each amenity must be a string.")),
+    availabilityDate: yup.date().nullable(),
+    listedBy: yup.string().matches(/^[a-f\d]{24}$/i, "ListedBy must be a valid ObjectId."),
+    assignedTo: yup.string().nullable().matches(/^[a-f\d]{24}$/i, "AssignedTo must be a valid ObjectId."),
+    createdAt: yup.date().default(() => new Date()),
+    numberOfRooms: yup.number().required("Number of rooms is required.").positive("Rooms must be positive.").integer("Rooms must be an integer."),
+    address: yup.object().shape({
+        street: yup.string().required("Street is required."),
+        propertyNumber: yup.string().nullable(),
+        area: yup.string().required("Area is required."),
+        city: yup.string().required("City is required."),
+        state: yup.string().required("State is required."),
+        postalCode: yup.string().required("Postal code is required."),
+    }),
+    propertyType: yup.string()
+        .required("Property type is required.")
+        .oneOf([
+            "single-family-home", "multi-family-home", "apartment", "condo", "townhouse", "villa", "cottage", "mobile-home", 
+            "mansion", "co-living-space", "penthouse", "office-buildings-high-rise", "office-buildings-low-rise", 
+            "office-buildings-business-park", "retail-shopping-mall", "retail-supermarket", "retail-standalone-store", 
+            "hotel", "resort", "industrial-park", "factory", "warehouse", "distribution-center", "cold-storage", 
+            "farmland", "ranch", "orchard", "vineyard", "mixed-use-development", "live-work-space", "vacation-home", 
+            "cabin", "recreational-resort", "campground", "hospital", "clinic", "school", "church", "stadium", 
+            "cemetery", "private-island", "estate", "floating-home", "raw-land", "developed-land", "subdivision", 
+            "shared-room"
+        ], "Invalid property type."),
+    areaInSquareMeters: yup.number().required("Area in square meters is required.").positive("Area must be positive."),
+    yearBuilt: yup.number().nullable().positive("Year built must be positive."),
+    parkingSpaces: yup.number().nullable().integer("Parking spaces must be an integer.").positive("Parking spaces must be positive."),
 });
+
 
 // Create new property
 exports.createProperty = async (req, res) => {
@@ -78,8 +105,10 @@ exports.deleteProperty = async (req, res) => {
 // Get properties with filters
 exports.getPropertiesWithFilters = async (req, res) => {
     try {
-        const filters = req.query; // Get filters from query parameters
+        const filters = req.body;
+        //console.log("filters from backend"+JSON.stringify(filters));
         const properties = await propertyService.getPropertiesWithFilters(filters);
+        //console.log("from backend properties after filter"+properties);
         res.status(200).json(properties);
     } catch (error) {
         res.status(500).json({ error: error.message });

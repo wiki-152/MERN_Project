@@ -52,21 +52,29 @@ exports.deleteProperty = async (id) => {
 
 // Get properties with filters
 exports.getPropertiesWithFilters = async (filters) => {
+    //console.log("filters from bacddddkend"+JSON.stringify(filters));
     try {
-        let query = {};
-        
-        // Apply filters
-        if (filters.minPrice) query.price = { $gte: parseFloat(filters.minPrice) };
-        if (filters.maxPrice) query.price = { ...query.price, $lte: parseFloat(filters.maxPrice) };
-        if (filters.propertyType) query.propertyType = filters.propertyType;
-        if (filters.location) query.location = { $regex: filters.location, $options: 'i' };
-        if (filters.bedrooms) query.bedrooms = parseInt(filters.bedrooms);
-        if (filters.bathrooms) query.bathrooms = parseInt(filters.bathrooms);
-        if (filters.minArea) query.area = { $gte: parseFloat(filters.minArea) };
-        if (filters.maxArea) query.area = { ...query.area, $lte: parseFloat(filters.maxArea) };
+        const query = {};
 
-        return await Property.find(query);
+        // If the location filter is provided, use a case-insensitive regular expression to match the location
+        if (filters.location) {
+            query.location = { $regex: filters.location, $options: 'i' };
+            // console.log("query location"+query.location);
+        }
+
+        
+
+        //console.log("queryyyy"+ query.location);
+
+        // Add more filter conditions as needed
+
+        const properties = await Property.find(query);
+
+        //console.log("properties from query"+properties);
+            
+
+        return properties;
     } catch (error) {
-        throw new Error('Error fetching filtered properties: ' + error.message);
+        throw new Error(`Error getting properties with filters: ${error.message}`);
     }
 };

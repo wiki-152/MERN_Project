@@ -21,7 +21,7 @@ router.delete('/propertyNoAuth/:id', propertyController.deleteProperty);
 // Routes without authentication
 router.get('/propertyNoAuth', propertyController.getProperties);
 router.get('/propertyNoAuth/:id', propertyController.getPropertyById);
-// Route with no auth and optional filters
-router.get('/propertyNoAuth/filters', propertyController.getPropertiesWithFilters);
+// Route with no auth and optional filters used post request
+router.post('/propertyNoAuth/filters', propertyController.getPropertiesWithFilters);
 
 module.exports = router;
