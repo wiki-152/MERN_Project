@@ -9,8 +9,9 @@ import Properties from './components/Properties/PropertiesHome';
 import Marketplace from './components/Marketplace/Marrketplace';
 import PropertyDetails from './pages/Property/PropertyDetails';
 import PropertyCard from './components/PropertyCard/PropertyCard';
-import Profile from './components/Profile/Profile';
+import Profile from './components/Settings/Profile/Profile';
 import PropertyResult from './pages/Property/PropertyResult';
+import Settings from './components/Settings/Settings';
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
         {/* Property Details Update -----------------------------------------*/}
         <Route path="/property-details" element={<PropertyDetails />} />
         <Route path="/property-card" element={<PropertyCard />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/properties/results" element={<PropertyResult />} />
       </Routes>
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import useUserStore from '../../stores/userStore';
 import useListingOwnerStore from '../../stores/listingOwnerStore';
+import { useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -10,11 +11,14 @@ const Navbar = () => {
 
     const isLoggedIn = isCustomerAuthenticated || isSellerAuthenticated;
 
+    const navigate = useNavigate();
     const handleLogout = () => {
         if (isCustomerAuthenticated) {
             logoutCustomer();
+            navigate('/');
         } else if (isSellerAuthenticated) {
             logoutSeller();
+            navigate('/');
         }
     };
 
@@ -39,7 +43,7 @@ const Navbar = () => {
                             {isCustomerAuthenticated ? user?.name || 'Customer' : listingOwner?.name || 'Seller'} <span>▼</span>
                         </button>
                         <div className="dropdown-menu">
-                            <Link to="/profile">Account</Link>
+                            <Link to="/settings">Account</Link>
                             <button onClick={handleLogout}>Logout</button>
                         </div>
                     </li>
