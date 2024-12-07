@@ -2,10 +2,34 @@
 
 import React, { useState } from 'react';
 import { Search, SlidersHorizontal } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import usePropertyStore from '../../stores/propertyStore';
 
 export default function HomePage() {
+  const navigate = useNavigate();
+  const { setSearchParams, searchProperties } = usePropertyStore();
   const [showFilters, setShowFilters] = useState(false);
   const [propertyType, setPropertyType] = useState('rent');
+
+  const handleSearch = async () => {
+    // Get all form values
+    const searchParams = {
+      location: document.querySelector('input[placeholder="Bern"]').value,
+      radius: parseInt(document.querySelector('select[class*="rounded-r-md"]').value),
+      priceMax: document.querySelector('select[class*="w-full rounded-md"]').value,
+      rooms: document.querySelector('select[class*="w-full rounded-md"]:last-of-type').value,
+      propertyType,
+    };
+
+    // Update store with search params
+    setSearchParams(searchParams);
+    
+    // Perform search
+    await searchProperties(searchParams);
+    
+    // Navigate to results page
+    navigate('/properties/results');
+  };
 
   return (
     <div className="relative min-h-screen bg-gray-900">
@@ -133,8 +157,11 @@ export default function HomePage() {
                 <SlidersHorizontal className="mr-2 h-4 w-4" />
                 Filters
               </button>
-              <button className="flex flex-1 items-center justify-center rounded-md bg-emerald-400 py-2 text-black hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-400">
-                <Search className="mr-2 h-4 w-4" /> 481 results
+              <button 
+                className="flex flex-1 items-center justify-center rounded-md bg-emerald-400 py-2 text-black hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                onClick={handleSearch}
+              >
+                <Search className="mr-2 h-4 w-4" /> Search Properties
               </button>
             </div>
           </div>

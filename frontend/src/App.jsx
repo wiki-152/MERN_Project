@@ -7,9 +7,10 @@ import Navbar from './components/Navbar/Navabar'; // Import the Navbar component
 import Footer from './components/Footer/Footer'; // Import the Footer component
 import Properties from './components/Properties/PropertiesHome';
 import Marketplace from './components/Marketplace/Marrketplace';
-import PropertyDetails from './pages/PropertyDetails/PropertyDetails';
+import PropertyDetails from './pages/Property/PropertyDetails';
 import PropertyCard from './components/PropertyCard/PropertyCard';
 import Profile from './components/Profile/Profile';
+import PropertyResult from './pages/Property/PropertyResult';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/property-details" element={<PropertyDetails />} />
         <Route path="/property-card" element={<PropertyCard />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/properties/results" element={<PropertyResult />} />
       </Routes>
 
       {/* Footer appears on all pages */}
