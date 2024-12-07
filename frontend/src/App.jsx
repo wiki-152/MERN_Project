@@ -12,6 +12,7 @@ import PropertyCard from './components/PropertyCard/PropertyCard';
 import Profile from './components/Settings/Profile/Profile';
 import PropertyResult from './pages/Property/PropertyResult';
 import Settings from './components/Settings/Settings';
+import SellerPanel from './components/Seller/Seller';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/property-card" element={<PropertyCard />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/properties/results" element={<PropertyResult />} />
+        <Route path="/seller-panel" element={<SellerPanel />} />
       </Routes>
 
       {/* Footer appears on all pages */}
