@@ -115,7 +115,7 @@ const VirtualTour = () => {
       />
 
       {/* Scene info display */}
-      <div className="scene-info">
+      <div className="scene-info -mt-4 ml-4">
         <h3>{tourConfig.scenes[currentScene].title}</h3>
         <p>{tourConfig.scenes[currentScene].description}</p>
       </div>

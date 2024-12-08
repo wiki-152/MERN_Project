@@ -21,7 +21,7 @@ const TourControls = ({
           onClick={onZoomIn}
           title="Zoom In"
         >
-          <i className="fas fa-plus"></i>
+          <img src="https://icons.iconarchive.com/icons/icons8/ios7/512/Very-Basic-Zoom-In-icon.png" alt="Zoom In" />
         </button>
         
         <button 
@@ -29,7 +29,7 @@ const TourControls = ({
           onClick={onZoomOut}
           title="Zoom Out"
         >
-          <i className="fas fa-minus"></i>
+          <img src="https://www.freeiconspng.com/uploads/zoom-out-icon-png-24.png" alt="Zoom Out" />
         </button>
 
         <button 
@@ -37,7 +37,7 @@ const TourControls = ({
           onClick={onRotateLeft}
           title="Rotate Left"
         >
-          <i className="fas fa-undo"></i>
+          <img src="https://creazilla-store.fra1.digitaloceanspaces.com/icons/3236981/rotate-left-icon-md.png" alt="Rotate Left" />
         </button>
 
         <button 
@@ -45,7 +45,7 @@ const TourControls = ({
           onClick={onRotateRight}
           title="Rotate Right"
         >
-          <i className="fas fa-redo"></i>
+          <img src="https://creazilla-store.fra1.digitaloceanspaces.com/icons/3236983/rotate-right-icon-md.png" alt="Rotate Right" />
         </button>
 
         <button 
@@ -53,7 +53,7 @@ const TourControls = ({
           onClick={onFullscreen}
           title="Toggle Fullscreen"
         >
-          <i className="fas fa-expand"></i>
+          <img src="https://www.freeiconspng.com/uploads/full-screen-icon-png-18.png" alt="Toggle Fullscreen" />
         </button>
       </div>
 
@@ -74,14 +74,14 @@ const TourControls = ({
 
       {/* Info Panel */}
       <div className="info-panel">
-        <p className="scene-info">
+        <p className="scene-info ml-6">
           {scenes[currentScene]?.description || 'No description available'}
         </p>
       </div>
 
       {/* Help Button */}
       <button 
-        className="help-btn"
+        className="help-btn "
         onClick={() => alert('Use controls to navigate. Click hotspots to move between rooms.')}
       >
         <i className="fas fa-question-circle"></i>
