@@ -42,6 +42,9 @@ const useUserStore = create((set) => ({
                 isAuthenticated: true,
                 loading: false,
             });
+
+            console.log(response.data.user);
+
             return true;
         } catch (err) {
             set({

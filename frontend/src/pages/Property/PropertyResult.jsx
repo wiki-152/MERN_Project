@@ -27,7 +27,7 @@ export default function PropertyResult() {
         <h2 className="mb-6 text-2xl font-bold text-white">
           {searchResults.length} Properties Found
         </h2>
-        
+
         <div className="flex flex-col space-y-6">
           {searchResults.map((property) => (
             <PropertyCard key={property._id} property={property} />

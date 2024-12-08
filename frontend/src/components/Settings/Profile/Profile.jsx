@@ -1,6 +1,4 @@
-'use client';
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Camera,
   Mail,
@@ -12,6 +10,7 @@ import {
   Check,
   X,
 } from 'lucide-react';
+import useUserStore from '../../../stores/userStore';
 
 export default function UpdateProfile() {
   const [profile, setProfile] = useState({
@@ -23,6 +22,32 @@ export default function UpdateProfile() {
     emailNotificationsEnabled: true,
   });
 
+  const { user } = useUserStore(state => ({
+    user: state.user
+  }));
+
+  // Effect to update state when the user data is available or changes
+  useEffect(() => {
+    if (user) {
+      setProfile(prevProfile => {
+        const updatedProfile = {
+          name: user.name || '',
+          email: user.email || '',
+          phone: user.phone || '',
+          profilePicture: user.profilePicture || '/placeholder.svg?height=100&width=100',
+          isHost: user.isHost || false,
+          emailNotificationsEnabled: user.emailNotificationsEnabled || true,
+        };
+
+        // Only update if the profile has changed
+        if (JSON.stringify(prevProfile) !== JSON.stringify(updatedProfile)) {
+          return updatedProfile;
+        }
+        return prevProfile; // Return the previous state if no changes
+      });
+    }
+  }, [user]); // Ensure user is a dependency
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Profile updated:', profile);

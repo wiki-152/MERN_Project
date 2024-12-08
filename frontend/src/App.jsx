@@ -47,6 +47,7 @@ function App() {
         <Route path="/marketplace" element={<Marketplace />} />
 
         {/* Property Details Update -----------------------------------------*/}
+        <Route path="/properties/:id" element={<PropertyDetails />} />
         <Route path="/property-details" element={<PropertyDetails />} />
         <Route path="/property-card" element={<PropertyCard />} />
         <Route path="/settings" element={<Settings />} />

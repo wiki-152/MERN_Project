@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropertyCardLayout from './PropertyCardLayout';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import { MapPin, Heart } from 'lucide-react';
 
 export default function PropertyCard({ property }) {
   const {
@@ -9,10 +10,12 @@ export default function PropertyCard({ property }) {
     title,
     rentPrice,
     location,
-    rooms,
-    area,
+    address,
+    numberOfRooms,
+    areaInSquareMeters,
     images,
     propertyType,
+    description,
   } = property;
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -64,7 +67,7 @@ export default function PropertyCard({ property }) {
           </div>
 
           {/* Lower Section: Thumbnail Preview */}
-          <div className="absolute bottom-0 left-0 right-0 flex h-[40px] gap-1 bg-black/30 p-1">
+          <div className="absolute bottom-0 left-0 right-0 flex h-[50px] gap-1 bg-black/30 p-1">
             {Array.from({ length: 3 }).map((_, index) => {
               const url = images?.[index] || '/placeholder.svg'; // Use placeholder if no image
               return (
@@ -86,22 +89,31 @@ export default function PropertyCard({ property }) {
           </div>
         </div>
 
-        <div className="w-2/3 p-6">
-          <h3 className="mb-2 text-xl font-semibold text-emerald-400">{title}</h3>
+        <div className="w-2/3 pl-6 pt-4">
+          <div className="flex justify-between items-center">
+          <h3 className="mb-4 text-2xl font-semibold text-emerald-400">
+            {numberOfRooms} , {areaInSquareMeters} m², CHF {rentPrice ? rentPrice.toLocaleString() : "NULL"}.- 
+            
+          </h3>
+          <button className=" ml-2 text-emerald-400 hover:text-emerald-600">
+              <Heart className="h-5 w-5" />
+            </button>
+          </div>
           
-          <div className="mb-4 text-2xl font-bold text-emerald-400">
-            {rentPrice ? `CHF ${rentPrice.toLocaleString()}` : "NULL"}
-            <span className="text-sm text-emerald-300 ml-1">
-              {propertyType === 'rent' ? '/month' : ''}
+          <div className="mb-4 font-bold text-emerald-400">
+          <div className="flex mt-1 items-center text-md">
+            <MapPin className="mr-1  h-4 w-4" />
+            <span className="text-sm">
+              {address ? (
+                `${address.street || ""}, ${address.propertyNumber || ""}, ${address.city || ""}, ${address.postalCode || ""}, ${address.area || ""}, ${address.state || ""}`
+              ) : "Address not available"}
             </span>
+          </div>
           </div>
           
           <div className="space-y-2 text-emerald-300">
-            <div className="text-lg">{location}</div>
-            <div className="flex justify-between text-emerald-200">
-              <span>{rooms} Rooms</span>
-              <span>{area} m²</span>
-            </div>
+            <div className="text-md">{description}</div>
+            
           </div>
         </div>
       </PropertyCardLayout>
