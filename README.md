@@ -110,6 +110,7 @@ npm install jsonwebtoken
 npm install yup
 npm install nodemailer
 npm install --save-dev nodemon
+npm install axios
 
 mkdir config controllers middleware models routes services utils
 touch app.js server.js .env
