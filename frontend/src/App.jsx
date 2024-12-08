@@ -1,22 +1,40 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// ------------------------------------------------------------------------------------------------ Navbar and ChatAssistance appears on all pages
+import Navbar from './components/Navbar/Navabar';
+import ChatAssistance from './components/ChatAssistance/Chat';
+
+// ------------------------------------------------------------------------------------------------ Footer appears on all pages
+import Footer from './components/Footer/Footer'; // Import the Footer component
+
+// ------------------------------------------------------------------------------------------------ Pages for User and Guest Common
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
-import Navbar from './components/Navbar/Navabar'; // Import the Navbar component
-import Footer from './components/Footer/Footer'; // Import the Footer component
 import Properties from './components/Properties/PropertiesHome';
-import Marketplace from './components/Marketplace/Marrketplace';
 import PropertyDetails from './pages/Property/PropertyDetails';
-import PropertyCard from './components/PropertyCard/PropertyCard';
-import Profile from './components/Settings/Profile/Profile';
 import PropertyResult from './pages/Property/PropertyResult';
+
+// ------------------------------------------------------------------------------------------------ User and Guest Marketplace
+import Marketplace from './components/Marketplace/Marrketplace'; // Marketplace------------------------------------
+
+// ------------------------------------------------------------------------------------------------ User and Seller Settings
 import Settings from './components/Settings/Settings';
-import SellerPanel from './components/Seller/Seller';
-import ChatAssistance from './components/ChatAssistance/Chat';
 import NotificationsAlerts from './components/Notifications/Notifications';
-import ReviewSystem from './components/ReviewCard/ReviewCard';
+
+// ------------------------------------------------------------------------------------------------ User
 import UserDashboard from './components/Dashboard/UserDashboard';
+import ReviewSystem from './components/ReviewCard/ReviewCard';
+
+// ------------------------------------------------------------------------------------------------ Seller
+import SellerHome from './pages/Seller/SellerHome';
+import PropertiesSeller from './components/Seller/PropertiesSeller';
+import MarketplaceSeller from './components/Seller/MarketplaceSeller';
+import FeedbackOverview from './components/Seller/FeedbackOverview';
+import OrderManagement from './components/Seller/OrderManagement';
+
+// ------------------------------------------------------------------------------------------------ Admin Dashboard
 import AdminDashboard from './components/Dashboard/AdminDashboard';
 import AdminListingManagement from './components/Admin/AdminListingManagement';
 import FeedbackComplaintsHandling from './components/Admin/FeedbackComplaintsHandling';
@@ -29,44 +47,60 @@ import SupportTicketManagement from './components/Admin/SupportTicketManagement'
 import UserRoleManagement from './components/Admin/UserRoleManagement';
 import UserVerificationManagement from './components/Admin/UserVerificationManagement';
 
-// Seller
-import SellerHome from './pages/Seller/SellerHome';
-import FeedbackOverview from './components/Seller/FeedbackOverview';
-import ListingManagement from './components/Seller/ListingManagement';
-import OrderManagement from './components/Seller/OrderManagement';
-import PromotionsDiscounts from './components/Seller/PromotionsDiscounts';
-import SalesDashboard from './components/Seller/SalesDashboard';
-import Seller from './components/Seller/Seller';
-import PropertiesSeller from './components/Seller/PropertiesSeller';
-import MarketplaceSeller from './components/Seller/MarketplaceSeller';
-
-// ------------------------------------------------------------------------------------------------ Routing to be done propertly for now direct access to check 
+// ------------------------------------------------------------------------------------------------ Other Components
+import PropertyCard from './components/PropertyCard/PropertyCard'; // Dummy components
 
 function App() {
   return (
     <Router>
-      {/* Navbar appears on all pages */}
+      {/* Navbar and ChatAssistance appears on all pages */}
       <Navbar />
+      <ChatAssistance />
+
 
       {/* Define routes for each page */}
       <Routes>
+        {/* User and Guest Common*/}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/properties" element={<Properties />} />
-        <Route path="/marketplace" element={<Marketplace />} />
-
-        {/* Property Details Update -----------------------------------------*/}
         <Route path="/properties/:id" element={<PropertyDetails />} />
-        <Route path="/property-details" element={<PropertyDetails />} />
-        <Route path="/property-card" element={<PropertyCard />} />
-        <Route path="/settings" element={<Settings />} />
         <Route path="/properties/results" element={<PropertyResult />} />
-        <Route path="/seller-panel" element={<SellerPanel />} />
-        <Route path="/chat" element={<ChatAssistance />} />
+
+        {/* User and Guest Properties */}
+        
+        {/* <Route path="/property-details" element={<PropertyDetails />} /> */} {/* Property Details Dummy */}
+        {/* <Route path="/property-card" element={<PropertyCard />} /> */} {/* Property Card Dummy */}
+
+
+        {/* User and Guest Marketplace */}
+        <Route path="/marketplace" element={<Marketplace />} /> {/* Marketplace------------------------------------ */}
+
+        {/* User and Seller Settings */}
+        <Route path="/settings" element={<Settings />} />
         <Route path="/notifications" element={<NotificationsAlerts />} />
-        <Route path="/review" element={<ReviewSystem />} />
+        {/* <Route path="/profile" element={<Profile />} /> */} {/* Profile Dummy */}
+
+        {/* User */}
         <Route path="/dashboard" element={<UserDashboard />} />
+        <Route path="/review" element={<ReviewSystem />} />
+
+        {/*Seller */}
+        <Route path="/seller-home" element={<SellerHome />} />
+        <Route path="/properties-seller" element={<PropertiesSeller />} />
+        <Route path="/marketplace-seller" element={<MarketplaceSeller />} />
+        <Route path="/feedback-overview" element={<FeedbackOverview />} />
+        <Route path="/order-management" element={<OrderManagement />} />
+        {/* <Route path="/seller-panel" element={<SellerPanel />} /> */} {/* Seller Panel Dummy */}
+        {/* <Route path="/listing-management" element={<ListingManagement />} /> */} {/* Listing Management Dummy */}
+        {/* <Route path="/promotions-discounts" element={<PromotionsDiscounts />} /> */} {/* Promotions Discounts Dummy */}
+        {/* <Route path="/sales-dashboard" element={<SalesDashboard />} /> */} {/* Sales Dashboard Dummy */}
+
+
+        {/* TBD*/}
+
+
         {/* Admin Dashboard */}
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/admin-listing-management" element={<AdminListingManagement />} />
@@ -81,17 +115,11 @@ function App() {
         <Route path="/user-verification-management" element={<UserVerificationManagement />} />
 
 
-        {/* Seller Home */}
-        <Route path="/seller-home" element={<SellerHome />} />
-        <Route path="/properties-seller" element={<PropertiesSeller />} />
-        <Route path="/marketplace-seller" element={<MarketplaceSeller />} />
 
-        <Route path="/feedback-overview" element={<FeedbackOverview />} />
-        <Route path="/listing-management" element={<ListingManagement />} />
-        <Route path="/order-management" element={<OrderManagement />} />
-        <Route path="/promotions-discounts" element={<PromotionsDiscounts />} />
-        <Route path="/sales-dashboard" element={<SalesDashboard />} />
+
+
       </Routes>
+      
 
       {/* Footer appears on all pages */}
       <Footer />
