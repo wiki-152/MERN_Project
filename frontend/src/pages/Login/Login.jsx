@@ -49,7 +49,7 @@ export default function LoginPage() {
     clearCustomerError()
     const success = await loginSeller(credentials)
     if (success) {
-      navigate('/')
+      navigate('/seller-home')
     }
   }
 

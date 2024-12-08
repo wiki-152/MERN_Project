@@ -37,6 +37,8 @@ import OrderManagement from './components/Seller/OrderManagement';
 import PromotionsDiscounts from './components/Seller/PromotionsDiscounts';
 import SalesDashboard from './components/Seller/SalesDashboard';
 import Seller from './components/Seller/Seller';
+import PropertiesSeller from './components/Seller/PropertiesSeller';
+import MarketplaceSeller from './components/Seller/MarketplaceSeller';
 
 // ------------------------------------------------------------------------------------------------ Routing to be done propertly for now direct access to check 
 
@@ -81,6 +83,9 @@ function App() {
 
         {/* Seller Home */}
         <Route path="/seller-home" element={<SellerHome />} />
+        <Route path="/properties-seller" element={<PropertiesSeller />} />
+        <Route path="/marketplace-seller" element={<MarketplaceSeller />} />
+
         <Route path="/feedback-overview" element={<FeedbackOverview />} />
         <Route path="/listing-management" element={<ListingManagement />} />
         <Route path="/order-management" element={<OrderManagement />} />
