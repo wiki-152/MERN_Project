@@ -3,29 +3,55 @@ const axios = require("axios");
 const router = express.Router();
 const Property = require('../models/Property');
 
-// Replace the dummy fetchPropertyData function
+// Function to fetch property data from database
 const fetchPropertyData = async (city) => {
   try {
-    // Find all properties in the given city
-    const properties = await Property.find({ city: city });
+    const properties = await Property.find({ "address.city": { $regex: new RegExp(city, 'i') } });
+    console.log(properties);
+    console.log(city);
+
+    if (properties.length === 0) {
+      return {
+        message: `No properties found in ${city}`,
+        properties: []
+      };
+    }
+
+    // Separate properties by type
+    const rentPerNightProperties = properties.filter(prop => prop.rentPerNight);
+    const rentPriceProperties = properties.filter(prop => prop.rentPrice);
+
+    // Calculate averages for rentPerNight properties
+    const avgRentPerNight = rentPerNightProperties.length > 0
+      ? rentPerNightProperties.reduce((sum, prop) => sum + (prop.rentPerNight || 0), 0) / rentPerNightProperties.length
+      : 0;
+
+    // Calculate averages for rentPrice properties
+    const avgRentPrice = rentPriceProperties.length > 0
+      ? rentPriceProperties.reduce((sum, prop) => sum + (prop.rentPrice || 0), 0) / rentPriceProperties.length
+      : 0;
     
-    // Calculate average price
-    const avgPrice = properties.reduce((sum, prop) => sum + prop.price, 0) / properties.length;
-    
-    // Calculate average distance from city center
-    const avgDistance = properties.reduce((sum, prop) => {
-      // Convert distance string to number (remove 'km' and parse)
-      const dist = parseFloat(prop.distance.replace('km', ''));
-      return sum + dist;
-    }, 0) / properties.length;
+    // Only calculate average distance for properties that have a distance value
+    const propertiesWithDistance = properties.filter(prop => prop.distance);
+    const avgDistance = propertiesWithDistance.length > 0
+      ? propertiesWithDistance.reduce((sum, prop) => {
+          const dist = parseFloat(prop.distance.replace('km', ''));
+          return sum + dist;
+        }, 0) / propertiesWithDistance.length
+      : 0;
 
     return {
-      avgPrice: Math.round(avgPrice),
-      avgDistance: `${avgDistance.toFixed(1)}km`,
+      avgRentPerNight: rentPerNightProperties.length > 0 ? Math.round(avgRentPerNight) : 'N/A',
+      avgRentPrice: rentPriceProperties.length > 0 ? Math.round(avgRentPrice) : 'N/A',
+      avgDistance: avgDistance ? `${avgDistance.toFixed(1)}km` : 'N/A',
       properties: properties.map(prop => ({
         name: prop.name,
-        price: prop.price,
-        distance: prop.distance
+        rentPerNight: prop.rentPerNight || 'N/A',
+        rentPrice: prop.rentPrice || 'N/A',
+        distance: prop.distance || 'N/A',
+        description: prop.description || '',
+        address: prop.address,
+        propertyType: prop.rentPerNight ? 'nightly' : 'monthly'
       }))
     };
   } catch (error) {
@@ -34,85 +60,91 @@ const fetchPropertyData = async (city) => {
   }
 };
 
-// New function to fetch process description from Gemini API
-const fetchProcessDescriptionFromAPI = async (userInput) => {
+// Function to get response from Gemini API
+const getGeminiResponse = async (query, propertyData) => {
   const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${process.env.GEMINI_API_KEY}`;
   const headers = {
     "Content-Type": "application/json"
   };
+  
+  const prompt = `
+    As a real estate assistant, please help with this query: "${query}"
+    
+    Here's the available property data:
+    Average Rent Per Night: ${propertyData.avgRentPerNight}
+    Average Rent Price: ${propertyData.avgRentPrice}
+    Average Distance from City Center: ${propertyData.avgDistance}
+    Number of Properties: ${propertyData.properties.length}
+    
+    Property Details:
+    ${JSON.stringify(propertyData.properties, null, 2)}
+    
+    Please provide a helpful response addressing the query using this property data.
+  `;
+
   const data = {
-    contents: [
-      {
-        parts: [
-          {
-            text: (
-              `Read the following process description: ${userInput}\n` +
-              "Your task is to break it into smaller steps. For each step, you need to:\n" +
-              "- Write down the task name (\"task\").\n" +
-              "- List the tasks that must be finished before this task can start (\"dependencies\").\n" +
-              "- If this task must happen one after the other, write \"Sequential\" for concurrency. If it can happen at the same time as other tasks, list those tasks (\"concurrency\").\n" +
-              "- Number each task in the order it should happen (\"order\"). Tasks that can happen at the same time should share the same number.\n\n" +
-              "Here are the rules you must follow:\n" +
-              "1. A task cannot happen at the same time as another task if it depends on that task.\n" +
-              "2. Tasks can only happen at the same time if they don’t depend on each other.\n" +
-              "3. Tasks at the same level of the process (same \"order\") should either be listed as concurrent or as separate steps in order.\n\n" +
-              "Return the result as a JSON array. Each task should look like this:\n" +
-              "{\n" +
-              "  \"task\": \"Task Name\",\n" +
-              "  \"dependencies\": [\"Other Task Name\"],\n" +
-              "  \"concurrency\": [\"Another Task Name\" or \"Sequential\"],\n" +
-              "  \"order\": Task Number\n" +
-              "}\n\n" +
-              "Make sure all tasks, dependencies, concurrency, and order are logical and match the process."
-            )
-          }
-        ]
-      }
-    ]
+    contents: [{
+      parts: [{
+        text: prompt
+      }]
+    }]
   };
 
   try {
     const response = await axios.post(apiUrl, data, { headers });
-    return response.data; // Return the response data
+    return response.data;
   } catch (error) {
-    console.error('Error fetching process description:', error);
+    console.error('Error getting Gemini response:', error);
     throw error;
   }
+};
+
+// Utility function to extract city from query using basic NLP
+const extractCity = (query) => {
+  const commonCities = ['new york', 'los angeles', 'chicago', 'houston', 'phoenix', 'philadelphia', 'san antonio', 'san diego', 'dallas', 'san jose'];
+  const queryLower = query.toLowerCase();
+  
+  for (const city of commonCities) {
+    if (queryLower.includes(city)) {
+      return city;
+    }
+  }
+  
+  // Extract words that could be cities (capitalized words)
+  const words = query.split(' ');
+  const potentialCity = words.find(word => /^[A-Z]/.test(word));
+  
+  return potentialCity || 'New York'; // Default to New York if no city found
 };
 
 router.post("/chat", async (req, res) => {
   try {
     const { query, location } = req.body;
+    
+    // Extract city from query or use location if provided
+    const city = location || extractCity(query);
+    
+    // Fetch property data
+    const propertyData = await fetchPropertyData(city);
+    
+    // Get AI response using property data
+    const aiResponse = await getGeminiResponse(query, propertyData);
+    
+    // Prepare final response
+    const response = {
+      reply: aiResponse,
+      propertyData: propertyData,
+      city: city
+    };
 
-    // Extract city or other relevant details from the query
-    const city = extractCity(query);
-
-    // Fetch data from the database
-    // const propertyData = await fetchPropertyData(city);
-
-    // Prepare context for the Gemini API
-    // const context = {
-    //   query,
-    //   location,
-    //   propertyData,
-    // };
-
-    // Call Gemini API
-    const processDescription = await fetchProcessDescriptionFromAPI(query); // Testing the new function
-    console.log(processDescription); // Log the response for testing
-
-    // res.json({ reply: geminiResponse.data.message }); // Commented out for testing
-    res.json({ reply: processDescription }); // Return the process description for testing
+    res.json(response);
   } catch (error) {
     console.error("Error in chatbot API:", error);
-    res.status(500).send("Error processing request");
+    res.status(500).json({
+      error: "Error processing request",
+      details: error.message
+    });
   }
 });
-
-// Utility function to extract city (placeholder)
-const extractCity = (query) => {
-  // Implement logic to extract city from query
-  return "New York";
-};
 
 module.exports = router;
