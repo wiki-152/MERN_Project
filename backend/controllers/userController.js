@@ -20,6 +20,12 @@ exports.registerUser = async (req, res) => {
     try {
         await registerSchema.validate({ name, email, password }, { abortEarly: false });
 
+        // Check if email already exists
+        const existingUser = await userService.getUserByEmail(email);
+        if (existingUser) {
+            return res.status(400).json({ message: 'Email already exists' });
+        }
+
         const { token, message } = await userService.registerUser(name, email, password);
         res.json({ token, message });
         console.log("Registration Successful");
@@ -44,7 +50,9 @@ exports.loginUser = async (req, res) => {
         await loginSchema.validate({ email, password }, { abortEarly: false });
 
         const { token, message } = await userService.loginUser(email, password);
-        res.json({ token, message });
+        // FInd the user from db and send it to the frontend
+        const user = await userService.getUserByEmail(email);
+        res.json({ token, message, user });
         console.log("Login Successful");
     } catch (error) {
         if (error.name === 'ValidationError') {

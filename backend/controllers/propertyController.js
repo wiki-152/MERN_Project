@@ -66,6 +66,7 @@ exports.getProperties = async (req, res) => {
 exports.getPropertyById = async (req, res) => {
     try {
         const property = await propertyService.getPropertyById(req.params.id);
+        console.log("property from backend"+JSON.stringify(property));
         if (!property) {
             return res.status(404).json({ message: 'Property not found' });
         }

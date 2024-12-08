@@ -41,6 +41,11 @@ exports.loginUser = async (email, password) => {
     return { token, message: 'Login successful' };
 };
 
+// Get User by Email
+exports.getUserByEmail = async (email) => {
+    return await User.findOne({ email });
+};
+
 // ------------------------------------------------------------------------------------------------------------PROFILE------------------------------------------------------------------------------------------------------------
 
 

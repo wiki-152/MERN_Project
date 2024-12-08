@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const PropertySchema = new mongoose.Schema({
     title: { type: String },
-    description: { type: String },
+    description: { type: String }, // Min 50 Words Max 100 Words
     location: { type: String },
     pricePerNight: { type: Number },
     images: [{ type: String }], // URLs of property images
@@ -26,6 +26,11 @@ const PropertySchema = new mongoose.Schema({
         state: { type: String, trim: true }, // e.g., "NY"
         postalCode: { type: String, trim: true }, // e.g., "10001"
     },
+
+    // --------------------------------------------------------------------------Check 
+    toRent: { type: Boolean, default: true },
+    toSell: { type: Boolean, default: false },
+    toRentPerNight: { type: Boolean, default: false },
     propertyType: {
         type: String,
         enum: [

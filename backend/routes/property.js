@@ -18,6 +18,8 @@ router.get('/propertyNoAuth/:id', propertyController.getPropertyById);
 router.put('/propertyNoAuth/:id', propertyController.updateProperty);
 router.delete('/propertyNoAuth/:id', propertyController.deleteProperty);
 
+router.get('/property/:id', propertyController.getPropertyById);
+
 // Routes without authentication
 router.get('/propertyNoAuth', propertyController.getProperties);
 router.get('/propertyNoAuth/:id', propertyController.getPropertyById);

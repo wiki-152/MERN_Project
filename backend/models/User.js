@@ -9,7 +9,6 @@ const UserSchema = new mongoose.Schema({
     password: { type: String, required: true },
     phone: { type: String }, // required: true
     profilePicture: { type: String }, // URL for user's profile picture
-    isHost: { type: Boolean, default: false }, // Indicates if the user is a host
     properties: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Property' }], // Properties listed by the user
     itemsForSale: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }], // Items listed for sale by the user
     bookedProperties: [
