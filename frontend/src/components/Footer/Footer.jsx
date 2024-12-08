@@ -1,7 +1,24 @@
-import appstoreLogo from '../../assets/images/app_store.png'
-import playstoreLogo from '../../assets/images/playstore.png'
+import logo from '../../assets/icons/logo.jpg'
+import logo_dark from '../../assets/icons/logo_dark.png'
+import appstoreLogo from '../../assets/icons/app_store.png'
+import playstoreLogo from '../../assets/icons/playstore.png'
 import { Link } from 'react-router-dom'
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from 'lucide-react'
+
+// Import Components to redirect to 
+import AboutUs from '../AboutUs/AboutUs'
+import Services from '../Services/Services'
+import Contact from '../ContactUsCompany/ContactUsCompany'
+import Careers from '../Careers/Careers'
+
+import Consulting from '../Consulting/Consulting'
+import FAQs from '../FAQs/FAQsComponent'
+import NewsArticles from '../NewsAndArticles/NewsAndArticles'
+import Support from '../Feedback/Feedback'
+
+
+
+
 
 export default function Footer() {
     return (
@@ -9,52 +26,52 @@ export default function Footer() {
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {/* Company Info */}
-                    <div className="space-y-4">
+                    <div className="space-y-2">
                         <img
-                            src={appstoreLogo}
+                            src={logo_dark}
                             alt="GTO Logo"
-                            width={150}
-                            height={50}
+                            width={200}
+                            height={70}
                             className="mb-4"
                         />
 
                         <p className="text-sm text-gray-400">
-                            Your trusted partner in technology and innovation
+                            Your trusted partner in the Market!
                         </p>
                     </div>
 
                     {/* Quick Links */}
                     <div>
-                        <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
+                        <h3 className="font-semibold text-lg mt-12 mb-4">Quick Links</h3>
                         <ul className="space-y-2">
-                            <li><Link href="#" className="text-gray-400 hover:text-white transition">About us</Link></li>
-                            <li><Link href="#" className="text-gray-400 hover:text-white transition">Services</Link></li>
-                            <li><Link href="#" className="text-gray-400 hover:text-white transition">Contact</Link></li>
-                            <li><Link href="#" className="text-gray-400 hover:text-white transition">Careers</Link></li>
+                            <li><Link to="/about" className="text-gray-400 hover:text-white transition">About us</Link></li>
+                            <li><Link to="/services" className="text-gray-400 hover:text-white transition">Services</Link></li>
+                            <li><Link to="/contact" className="text-gray-400 hover:text-white transition">Contact</Link></li>
+                            <li><Link to="/careers" className="text-gray-400 hover:text-white transition">Careers</Link></li>
                         </ul>
                     </div>
 
                     {/* Services */}
                     <div>
-                        <h3 className="font-semibold text-lg mb-4">Services</h3>
+                        <h3 className="font-semibold text-lg mt-12 mb-4">More</h3>
                         <ul className="space-y-2">
-                            <li><Link href="#" className="text-gray-400 hover:text-white transition">Consulting</Link></li>
-                            <li><Link href="#" className="text-gray-400 hover:text-white transition">Development</Link></li>
-                            <li><Link href="#" className="text-gray-400 hover:text-white transition">Analytics</Link></li>
-                            <li><Link href="#" className="text-gray-400 hover:text-white transition">Support</Link></li>
+                            <li><Link to="/consulting" className="text-gray-400 hover:text-white transition">Consulting</Link></li>
+                            <li><Link to="/faqs" className="text-gray-400 hover:text-white transition">FAQs</Link></li>
+                            <li><Link to="/news" className="text-gray-400 hover:text-white transition">News & Articles</Link></li>
+                            <li><Link to="/support" className="text-gray-400 hover:text-white transition">Feedback</Link></li>
                         </ul>
                     </div>
 
                     {/* Download */}
                     <div>
-                        <h3 className="font-semibold text-lg mb-4">Download Our App</h3>
+                        <h3 className="font-semibold text-lg mt-6 mb-4">Download Our App</h3>
                         <div className="space-y-3">
                             <Link href="#" className="block">
                                 <img
                                     src={appstoreLogo}
                                     alt="GTO Logo"
                                     width={150}
-                                    height={50}
+                                    height={20}
                                     className="mb-4"
                                 />
 
@@ -63,7 +80,7 @@ export default function Footer() {
                                 src={playstoreLogo}
                                 alt="GTO Logo"
                                 width={150}
-                                height={50}
+                                height={20}
                                 className="mb-4"
                             />
 

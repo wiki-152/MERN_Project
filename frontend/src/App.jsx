@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 
 // ------------------------------------------------------------------------------------------------ Navbar and ChatAssistance appears on all pages
 import Navbar from './components/Navbar/Navabar';
@@ -50,9 +51,20 @@ import UserVerificationManagement from './components/Admin/UserVerificationManag
 // ------------------------------------------------------------------------------------------------ Other Components
 import PropertyCard from './components/PropertyCard/PropertyCard'; // Dummy components
 
+// ------------------------------------------------------------------------------------------------ Footer Components
+import AboutUs from './components/AboutUs/AboutUs';
+import Services from './components/Services/Services';
+import ContactUsCompany from './components/ContactUsCompany/ContactUsCompany';
+import Careers from './components/Careers/Careers';
+import Consulting from './components/Consulting/Consulting';
+import FAQsComponent from './components/FAQs/FAQsComponent';
+import NewsArticles from './components/NewsAndArticles/NewsAndArticles';
+import Support from './components/Feedback/Feedback';
+
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       {/* Navbar and ChatAssistance appears on all pages */}
       <Navbar />
       <ChatAssistance />
@@ -115,6 +127,17 @@ function App() {
         <Route path="/user-verification-management" element={<UserVerificationManagement />} />
 
 
+
+
+        {/* Footer Routes */}
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/contact" element={<ContactUsCompany />} /> 
+        <Route path="/careers" element={<Careers />} />
+        <Route path="/consulting" element={<Consulting />} />
+        <Route path="/faqs" element={<FAQsComponent />} />
+        <Route path="/news" element={<NewsArticles />} />
+        <Route path="/support" element={<Support />} />
 
 
 
