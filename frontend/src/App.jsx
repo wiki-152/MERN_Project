@@ -36,6 +36,7 @@ import FeedbackOverview from './components/Seller/FeedbackOverview';
 import OrderManagement from './components/Seller/OrderManagement';
 
 // ------------------------------------------------------------------------------------------------ Admin Dashboard
+import AdminHome from './components/Admin/AdminHome';
 import AdminDashboard from './components/Dashboard/AdminDashboard';
 import AdminListingManagement from './components/Admin/AdminListingManagement';
 import FeedbackComplaintsHandling from './components/Admin/FeedbackComplaintsHandling';
@@ -117,6 +118,7 @@ function App() {
 
 
         {/* Admin Dashboard */}
+        <Route path="/admin-home" element={<AdminHome />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/admin-listing-management" element={<AdminListingManagement />} />
         <Route path="/feedback-complaints-handling" element={<FeedbackComplaintsHandling />} />

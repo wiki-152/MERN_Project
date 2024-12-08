@@ -13,4 +13,7 @@ router.get('/profile', authMiddleware, userController.getUserProfile);
 router.put('/profile', authMiddleware, userController.updateUserProfile);
 router.delete('/profile', authMiddleware, userController.deleteUserProfile);
 
+// Route to send email to all users
+router.post('/send-emails', userController.sendEmailToAllUsers);
+
 module.exports = router;

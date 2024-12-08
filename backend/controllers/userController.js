@@ -139,6 +139,51 @@ exports.loginUser = async (req, res) => {
     }
 };
 
+// Send Email to All Users
+exports.sendEmailToAllUsers = async (req, res) => {
+    const { subject, body } = req.body;
+
+    try {
+        // Fetch all users from the database
+        const users = await userService.getAllUsers(); // Assuming this method exists in userService
+        const emails = users.map(user => user.email); // Extract emails from users
+
+        // Send email to all users
+        const emailPromises = emails.map(email => {
+            const request = mailjet
+                .post('send', { version: 'v3.1' })
+                .request({
+                    Messages: [
+                        {
+                            From: {
+                                Email: 'abdullahmansoor04@gmail.com', // Replace with your verified sender email
+                                Name: 'Tiefen Reich'
+                            },
+                            To: [
+                                {
+                                    Email: email,
+                                    Name: '' 
+                                }
+                            ],
+                            Subject: subject,
+                            TextPart: body,
+                            HTMLPart: body // Assuming body can be HTML; adjust as needed
+                        }
+                    ]
+                });
+            return request;
+        });
+
+        // Wait for all email promises to resolve
+        await Promise.all(emailPromises);
+
+        res.json({ message: 'Emails sent successfully' });
+    } catch (error) {
+        console.error('Error sending email to all users:', error.message);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
 // ---------------------------------------------------------PROFILE---------------------------------------------------------
 
 // Get User Profile

@@ -73,3 +73,8 @@ exports.deleteUserProfile = async (userId) => {
     return await User.findByIdAndDelete(userId);
 };
  
+// Get all users
+exports.getAllUsers = async () => {
+    return await User.find();
+};
+

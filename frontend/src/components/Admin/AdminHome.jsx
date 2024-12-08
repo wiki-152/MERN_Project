@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Home, DollarSign, Tag, ShoppingCart, MessageSquare, Calendar, PenToolIcon as Tool, CreditCard, FileText, TrendingUp, BarChart2, FileBarChart, Menu, X } from 'lucide-react';
+import { Home, DollarSign, Tag, ShoppingCart, MessageSquare, Calendar, PenToolIcon as Tool, CreditCard, FileText, TrendingUp, BarChart2, FileBarChart, Menu, X, MessageCircle, User } from 'lucide-react';
 import AdminListingsManagement from './AdminListingManagement';
 import FeedbackComplaintsHandling from './FeedbackComplaintsHandling';
 import ContentManagementSystem from './ContentManagementSystem';
@@ -15,22 +15,23 @@ import UserVerificationManagement from './UserVerificationManagement';
 
 const AdminHome = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [selectedComponent, setSelectedComponent] = useState('FeedbackComplaintsHandling');
+  const [selectedComponent, setSelectedComponent] = useState('Home');
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
   const menuItems = [
-    { icon: <Home size={20} />, text: 'Home', link: 'FeedbackComplaintsHandling' },
+    { icon: <Home size={20} />, text: 'Home', link: 'Home' },
+    { icon: <MessageCircle size={20} />, text: 'Feedback Handling', link: 'FeedbackComplaintsHandling' },
     { icon: <Tag size={20} />, text: 'Content Management', link: 'ContentManagementSystem' },
     { icon: <DollarSign size={20} />, text: 'Backup & Restore', link: 'BackupAndRestore' },
     { icon: <Tool size={20} />, text: 'Marketing Tools', link: 'MarketingTools' },
-    { icon: <SecuritySettings size={20} />, text: 'Security Settings', link: 'SecuritySettings' },
+    { icon: <Tool size={20} />, text: 'Security Settings', link: 'SecuritySettings' },
     { icon: <FileText size={20} />, text: 'Site Analytics', link: 'SiteAnalytics' },
     { icon: <MessageSquare size={20} />, text: 'Support Ticket Management', link: 'SupportTicketManagement' },
-    { icon: <UserRoleManagement size={20} />, text: 'User Role Management', link: 'UserRoleManagement' },
-    { icon: <UserVerificationManagement size={20} />, text: 'User Verification', link: 'UserVerificationManagement' },
-    { icon: <TransactionCommissionReports size={20} />, text: 'Transaction Commission Reports', link: 'TransactionCommissionReports' },
-    { icon: <AdminListingsManagement size={20} />, text: 'Listings Management', link: 'AdminListingsManagement' },
+    { icon: <User size={20} />, text: 'User Role Management', link: 'UserRoleManagement' },
+    { icon: <User size={20} />, text: 'User Verification', link: 'UserVerificationManagement' },
+    { icon: <DollarSign size={20} />, text: 'Transaction Commission Reports', link: 'TransactionCommissionReports' },
+    { icon: <Home size={20} />, text: 'Listings Management', link: 'AdminListingsManagement' },
   ];
 
   return (
@@ -85,6 +86,8 @@ const AdminHome = () => {
           {selectedComponent === 'SupportTicketManagement' && <SupportTicketManagement />}
           {selectedComponent === 'UserRoleManagement' && <UserRoleManagement />}
           {selectedComponent === 'UserVerificationManagement' && <UserVerificationManagement />}
+          {selectedComponent === 'TransactionCommissionReports' && <TransactionCommissionReports />}
+          {selectedComponent === 'AdminListingsManagement' && <AdminListingsManagement />}
         </main>
       </div>
     </div>

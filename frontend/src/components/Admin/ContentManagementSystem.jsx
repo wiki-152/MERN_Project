@@ -9,7 +9,7 @@ const ContentManagementSystem = () => {
   ];
 
   return (
-    <div className="p-6 bg-gray-100">
+    <div className="p-6 bg-gray-900">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold">Content Management System</h2>
         <button className="bg-green-500 text-white px-4 py-2 rounded-lg flex items-center">
@@ -18,7 +18,7 @@ const ContentManagementSystem = () => {
       </div>
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <table className="min-w-full">
-          <thead className="bg-gray-50">
+          <thead className="bg-gray-800">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Author</th>
@@ -27,7 +27,7 @@ const ContentManagementSystem = () => {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-gray-800 divide-y divide-gray-200">
             {articles.map((article) => (
               <tr key={article.id}>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -40,9 +40,9 @@ const ContentManagementSystem = () => {
                 <td className="px-6 py-4 whitespace-nowrap">{article.date}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                    article.status === 'Published' ? 'bg-green-100 text-green-800' :
-                    article.status === 'Draft' ? 'bg-yellow-100 text-yellow-800' :
-                    'bg-blue-100 text-blue-800'
+                    article.status === 'Published' ? 'bg-green-900 text-green-100' :
+                    article.status === 'Draft' ? 'bg-yellow-900 text-yellow-100' :
+                    'bg-blue-900 text-blue-100'
                   }`}>
                     {article.status}
                   </span>

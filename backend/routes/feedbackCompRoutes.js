@@ -5,11 +5,11 @@ const adminMiddleware = require('../middleware/adminMiddleware');
 
 router.post('/add', feedbackCompController.createFeedback);
 
-router.get('/', adminMiddleware, feedbackCompController.getAllFeedback);
+router.get('/', feedbackCompController.getAllFeedback);
 
-router.put('/:id', adminMiddleware, feedbackCompController.updateFeedback);
+router.put('/:id', feedbackCompController.updateFeedback);
 
-router.delete('/:id', adminMiddleware, feedbackCompController.deleteFeedback);
+router.delete('/:id', feedbackCompController.deleteFeedback);
 
 module.exports = router;
 
