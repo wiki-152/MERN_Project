@@ -12,7 +12,7 @@ const upload = multer({ dest: 'uploads/' }); // Specify your upload directory
 // old router.post('/property', authMiddleware, propertyController.createProperty);
 router.post('/property', authMiddleware, upload.fields([{ name: 'images', maxCount: 10 }, { name: 'virtualTourImages', maxCount: 5 }]), propertyController.createProperty);
 router.get('/property', propertyController.getProperties);
-// router.get('/property/:id', propertyController.getPropertyById);
+router.get('/property/:id', propertyController.getPropertyById);
 // router.put('/property/:id', authMiddleware, propertyController.updateProperty);
 // router.delete('/property/:id', authMiddleware, propertyController.deleteProperty);
 

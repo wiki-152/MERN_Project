@@ -36,7 +36,7 @@ export default function Settings() {
   return (
     <div className="flex min-h-screen bg-gray-900 text-white">
       <SettingsSidebar activeSection={activeSection} onSectionChange={setActiveSection} />
-      <main className="flex-1 p-8">{renderContent()}</main>
+      <main className="flex-1 ml-2">{renderContent()}</main>
     </div>
   )
 }
