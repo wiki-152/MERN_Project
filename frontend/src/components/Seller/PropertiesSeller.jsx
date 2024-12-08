@@ -19,7 +19,7 @@ import CustomReportsComponent from './CustomReports';
 const PropertiesSeller = () => {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [selectedComponent, setSelectedComponent] = useState(null);
+  const [selectedComponent, setSelectedComponent] = useState('HomeComponent');
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
