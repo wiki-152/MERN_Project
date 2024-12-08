@@ -13,41 +13,30 @@ import {
 import useUserStore from '../../../stores/userStore';
 
 export default function UpdateProfile() {
+  const { user } = useUserStore();
+
   const [profile, setProfile] = useState({
     name: 'John Doe',
     email: 'john@example.com',
     phone: '+1234567890',
-    profilePicture: '/placeholder.svg?height=100&width=100',
+    profilePicture: 'frontend\src\assets\images\default_profile_image.jpg',
     isHost: false,
     emailNotificationsEnabled: true,
   });
 
-  const { user } = useUserStore(state => ({
-    user: state.user
-  }));
-
-  // Effect to update state when the user data is available or changes
   useEffect(() => {
     if (user) {
-      setProfile(prevProfile => {
-        const updatedProfile = {
-          name: user.name || '',
-          email: user.email || '',
-          phone: user.phone || '',
-          profilePicture: user.profilePicture || '/placeholder.svg?height=100&width=100',
-          isHost: user.isHost || false,
-          emailNotificationsEnabled: user.emailNotificationsEnabled || true,
-        };
-
-        // Only update if the profile has changed
-        if (JSON.stringify(prevProfile) !== JSON.stringify(updatedProfile)) {
-          return updatedProfile;
-        }
-        return prevProfile; // Return the previous state if no changes
+      setProfile({
+        name: user.name || '',
+        email: user.email || '',
+        phone: user.phone || '',
+        profilePicture: user.profilePicture || 'frontend\src\assets\images\default_profile_image.jpg',
+        isHost: user.isHost || false,
+        emailNotificationsEnabled: user.emailNotificationsEnabled || true,
       });
     }
-  }, [user]); // Ensure user is a dependency
-  
+  }, [user]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Profile updated:', profile);

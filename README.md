@@ -95,6 +95,9 @@ For Tailwind CSS
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
 
+npm install js-cookie
+npm install chart.js react-chartjs-2
+
 npm run dev  # (for Vite)
 npm start    # (for Create React App)
 

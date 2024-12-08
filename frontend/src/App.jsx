@@ -29,6 +29,14 @@ import SupportTicketManagement from './components/Admin/SupportTicketManagement'
 import UserRoleManagement from './components/Admin/UserRoleManagement';
 import UserVerificationManagement from './components/Admin/UserVerificationManagement';
 
+// Seller
+import SellerHome from './pages/Seller/SellerHome';
+import FeedbackOverview from './components/Seller/FeedbackOverview';
+import ListingManagement from './components/Seller/ListingManagement';
+import OrderManagement from './components/Seller/OrderManagement';
+import PromotionsDiscounts from './components/Seller/PromotionsDiscounts';
+import SalesDashboard from './components/Seller/SalesDashboard';
+import Seller from './components/Seller/Seller';
 
 // ------------------------------------------------------------------------------------------------ Routing to be done propertly for now direct access to check 
 
@@ -69,6 +77,15 @@ function App() {
         <Route path="/support-ticket-management" element={<SupportTicketManagement />} />
         <Route path="/user-role-management" element={<UserRoleManagement />} />
         <Route path="/user-verification-management" element={<UserVerificationManagement />} />
+
+
+        {/* Seller Home */}
+        <Route path="/seller-home" element={<SellerHome />} />
+        <Route path="/feedback-overview" element={<FeedbackOverview />} />
+        <Route path="/listing-management" element={<ListingManagement />} />
+        <Route path="/order-management" element={<OrderManagement />} />
+        <Route path="/promotions-discounts" element={<PromotionsDiscounts />} />
+        <Route path="/sales-dashboard" element={<SalesDashboard />} />
       </Routes>
 
       {/* Footer appears on all pages */}

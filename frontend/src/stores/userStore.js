@@ -5,9 +5,9 @@ import useListingOwnerStore from './listingOwnerStore'; // Import the seller sto
 const API_BASE_URL = 'http://localhost:2469/api/user';
 
 const useUserStore = create((set) => ({
-    user: null,
-    token: null, // Store the token here
-    isAuthenticated: false,
+    user: JSON.parse(localStorage.getItem('user')) || null,
+    token: localStorage.getItem('token') || null,
+    isAuthenticated: !!localStorage.getItem('token'),
     loading: false,
     error: null,
 
@@ -16,13 +16,21 @@ const useUserStore = create((set) => ({
         try {
             set({ loading: true, error: null });
             const response = await axios.post(`${API_BASE_URL}/register`, formData);
-            set({
-                user: response.data.user,
-                token: response.data.token,
-                isAuthenticated: true,
-                loading: false,
+            set((state) => {
+                // Only update if the user data is different
+                if (JSON.stringify(state.user) !== JSON.stringify(response.data.user)) {
+                    localStorage.setItem('user', JSON.stringify(response.data.user));
+                    localStorage.setItem('token', response.data.token);
+                    return {
+                        user: response.data.user,
+                        token: response.data.token,
+                        isAuthenticated: true,
+                        loading: false,
+                    };
+                }
+                return { loading: false };
             });
-            useListingOwnerStore.getState().logout(); // Reset seller state
+            useListingOwnerStore.getState().logout();
         } catch (err) {
             set({
                 error: err.response?.data?.message || 'Signup failed. Please try again.',
@@ -36,15 +44,19 @@ const useUserStore = create((set) => ({
         try {
             set({ loading: true, error: null });
             const response = await axios.post(`${API_BASE_URL}/login`, credentials);
-            set({
-                user: response.data.user,
-                token: response.data.token,
-                isAuthenticated: true,
-                loading: false,
+            set((state) => {
+                if (JSON.stringify(state.user) !== JSON.stringify(response.data.user)) {
+                    localStorage.setItem('user', JSON.stringify(response.data.user));
+                    localStorage.setItem('token', response.data.token);
+                    return {
+                        user: response.data.user,
+                        token: response.data.token,
+                        isAuthenticated: true,
+                        loading: false,
+                    };
+                }
+                return { loading: false };
             });
-
-            console.log(response.data.user);
-
             return true;
         } catch (err) {
             set({
@@ -57,6 +69,8 @@ const useUserStore = create((set) => ({
 
     // Logout action
     logout: (fromListingOwner = false) => {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
         set({
             user: null,
             token: null,
