@@ -98,6 +98,8 @@ npx tailwindcss init -p
 npm install js-cookie
 npm install chart.js react-chartjs-2
 
+npm i @cloudinary/url-gen @cloudinary/react
+
 npm run dev  # (for Vite)
 npm start    # (for Create React App)
 
@@ -111,6 +113,7 @@ npm install yup
 npm install nodemailer
 npm install --save-dev nodemon
 npm install axios
+npm install multer
 
 mkdir config controllers middleware models routes services utils
 touch app.js server.js .env
