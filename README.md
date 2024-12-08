@@ -123,6 +123,8 @@ npm install --save-dev nodemon
 npm install axios
 npm install multer
 
+npm install node-mailjet
+
 mkdir config controllers middleware models routes services utils
 touch app.js server.js .env
 
