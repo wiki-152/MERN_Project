@@ -65,3 +65,9 @@
 .dropdown:hover .dropdown-menu {
     display: block;
 }
+
+/* Navbar.css */
+.navbar-logo {
+    width: 60px; /* Adjust the width as needed */
+    height: 40px; /* Maintain aspect ratio */
+}

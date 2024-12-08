@@ -4,6 +4,7 @@ import useUserStore from '../../stores/userStore';
 import useListingOwnerStore from '../../stores/listingOwnerStore';
 import { useNavigate } from 'react-router-dom';
 import './Navbar.css';
+import logoDark from '../../assets/icons/logo_dark.png';
 
 const Navbar = () => {
     const { user, isAuthenticated: isCustomerAuthenticated, logout: logoutCustomer } = useUserStore();
@@ -26,7 +27,15 @@ const Navbar = () => {
         <nav className="navbar">
             <div className="logo">
                 {/* managed according to customer or seller */}
-                {isSellerAuthenticated ? <Link to="/seller-home">MyApp</Link> : <Link to="/">MyApp</Link>}
+                {isSellerAuthenticated ? (
+                    <Link to="/seller-home">
+                        <img className="navbar-logo" src={logoDark} alt="Logo" />
+                    </Link>
+                ) : (
+                    <Link to="/">
+                        <img className="navbar-logo" src={logoDark} alt="Logo" />
+                    </Link>
+                )}
             </div>
             <ul className="nav-links">
                 {!isLoggedIn ? (
