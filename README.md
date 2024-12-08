@@ -102,6 +102,9 @@ https://cloudinary.com/documentation/image_upload_api_reference
 https://console.cloudinary.com/pm/c-601876bf0603aab3a5822fe2976316/developer-dashboard
 npm i @cloudinary/url-gen @cloudinary/react
 
+Virtual Tour
+npm install pannellum-react --legacy-peer-deps
+
 Gemini 
 https://aistudio.google.com/app/u/1/apikey?_gl=1*1hcy91n*_ga*MTEzNDgyMTA2OC4xNzMyNDQ1OTA1*_ga_P1DBVKWT6V*MTczMzY1NTY0My4yLjAuMTczMzY1NTY0My42MC4wLjEzMDAzNzA3MTI.&pli=1
 
