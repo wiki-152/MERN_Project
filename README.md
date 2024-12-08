@@ -123,7 +123,11 @@ npm install --save-dev nodemon
 npm install axios
 npm install multer
 
+Causing Conflicts with Pannellum
+npm install react-leaflet
+
 npm install node-mailjet
+npm install sweetalert2
 
 mkdir config controllers middleware models routes services utils
 touch app.js server.js .env
