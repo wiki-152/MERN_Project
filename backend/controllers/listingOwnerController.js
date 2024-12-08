@@ -44,8 +44,10 @@ exports.loginListingOwner = async (req, res) => {
         await loginListingOwnerSchema.validate({ email, password }, { abortEarly: false });
 
         const { token, message } = await listingOwnerService.loginListingOwner(email, password);
-        res.json({ token, message });
-        console.log("LO Login Successful");
+        // also sending the listingOwner object
+        const listingOwner = await listingOwnerService.getListingOwnerByEmail(email);
+        res.json({ token, message , listingOwner: listingOwner });
+        console.log("LO Login Successful + Token: ", token);
     } catch (error) {
         if (error.name === 'ValidationError') {
             return res.status(400).json({ message: error.errors.join(', ') });

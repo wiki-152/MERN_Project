@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Home, DollarSign, Calendar, Image, Coffee, MapPin, Bed, Square, Tag, Building, CheckSquare, Upload, X } from 'lucide-react';
+import axios from 'axios';
 
 const NewListing = () => {
   const [property, setProperty] = useState({
@@ -46,25 +47,58 @@ const NewListing = () => {
     }
   };
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = async (e) => {
     const files = Array.from(e.target.files);
-    setImageFiles(prev => [...prev, ...files]);
+    const uploadedImageUrls = [];
+
+    for (const file of files) {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', 'PImages');
+
+        try {
+            const response = await axios.post('https://api.cloudinary.com/v1_1/dhdbqlrdu/image/upload', formData);
+            uploadedImageUrls.push(response.data.secure_url);
+        } catch (error) {
+            console.error('Error uploading image to Cloudinary:', error);
+            alert('Failed to upload image. Please try again.');
+        }
+    }
+
+    setImageFiles(uploadedImageUrls);
   };
 
   const removeImage = (index) => {
     setImageFiles(prev => prev.filter((_, i) => i !== index));
   };
 
-  const handleVirtualTourImageUpload = (e) => {
+  const handleVirtualTourImageUpload = async (e) => {
     const files = Array.from(e.target.files);
-    setVirtualTourImages(prev => [...prev, ...files]);
+    const uploadedVirtualTourUrls = [];
+
+    for (const file of files) {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', 'PImages');
+
+        try {
+            const response = await axios.post('https://api.cloudinary.com/v1_1/dhdbqlrdu/image/upload', formData);
+            //console.log("response.data.secure_url: ", response.data.secure_url);
+            uploadedVirtualTourUrls.push(response.data.secure_url);
+        } catch (error) {
+            console.error('Error uploading virtual tour image to Cloudinary:', error);
+            alert('Failed to upload virtual tour image. Please try again.');
+        }
+    }
+
+    setVirtualTourImages(uploadedVirtualTourUrls);
   };
 
   const removeVirtualTourImage = (index) => {
     setVirtualTourImages(prev => prev.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (imageFiles.length < 5) {
       alert('Please upload at least 5 property images.');
@@ -74,9 +108,31 @@ const NewListing = () => {
       alert('Please upload at least 3 virtual tour images.');
       return;
     }
-    // Here you would typically send the data to your backend
-    // You'd need to handle file uploads separately, possibly using FormData
-    console.log({ ...property, imageFiles, virtualTourImages });
+    
+    console.log("emasddddddddsasdsdil: ", localStorage.getItem('email'));
+
+    const formData = new FormData();
+    formData.append('property', JSON.stringify({ 
+        ...property, 
+        images: imageFiles,
+        virtualTourImages: virtualTourImages,
+        listedByEmail: localStorage.getItem('email')
+    }));
+
+    try {
+      const token = localStorage.getItem('listingOwnerStore');
+      //console.log("sdfsd"+token);
+      //console.log("formData: ", formData.get('property'));
+      const response = await axios.post('http://localhost:2469/api/property/property', formData, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      console.log('Property added successfully:', response.data);
+    } catch (error) {
+        console.error('Error adding property:', error.response.data);
+        alert('Failed to add property. Please try again.');
+    }
   };
 
   const propertyTypes = [
@@ -208,10 +264,10 @@ const NewListing = () => {
           />
           <p className="text-sm text-gray-400 mt-1">Selected files: {imageFiles.length}</p>
           <div className="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {imageFiles.map((file, index) => (
+            {imageFiles.map((url, index) => (
               <div key={index} className="relative">
                 <img
-                  src={URL.createObjectURL(file)}
+                  src={url}
                   alt={`Uploaded image ${index + 1}`}
                   className="w-full h-32 object-cover rounded"
                 />
@@ -243,10 +299,10 @@ const NewListing = () => {
           />
           <p className="text-sm text-gray-400 mt-1">Selected virtual tour files: {virtualTourImages.length}</p>
           <div className="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {virtualTourImages.map((file, index) => (
+            {virtualTourImages.map((url, index) => (
               <div key={index} className="relative">
                 <img
-                  src={URL.createObjectURL(file)}
+                  src={url}
                   alt={`Virtual tour image ${index + 1}`}
                   className="w-full h-32 object-cover rounded"
                 />

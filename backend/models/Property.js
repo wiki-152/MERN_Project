@@ -8,12 +8,13 @@ const PropertySchema = new mongoose.Schema({
     location: { type: String },
     pricePerNight: { type: Number },
     images: [{ type: String }], // URLs of property images
+    virtualTourImages: [{ type: String }], // URLs of virtual tour images
     amenities: [{ type: String }], // List of amenities (e.g., WiFi, Pool, etc.)
     availabilityDate: { 
         type: Date,
         default: null
     },
-    listedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // User who listed the property
+    listedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'listingOwner' }, // User who listed the property
     assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null }, // User who rented the property
     createdAt: { type: Date, default: Date.now },
     numberOfRooms: { type: Number },

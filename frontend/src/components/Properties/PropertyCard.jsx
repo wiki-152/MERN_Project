@@ -18,6 +18,8 @@ export default function PropertyCard({ property }) {
     description,
   } = property;
 
+  console.log("images: ", images);
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const nextImage = (e) => {

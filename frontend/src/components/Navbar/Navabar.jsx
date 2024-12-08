@@ -25,7 +25,8 @@ const Navbar = () => {
     return (
         <nav className="navbar">
             <div className="logo">
-                <Link to="/">MyApp</Link>
+                {/* managed according to customer or seller */}
+                {isSellerAuthenticated ? <Link to="/seller-home">MyApp</Link> : <Link to="/">MyApp</Link>}
             </div>
             <ul className="nav-links">
                 {!isLoggedIn ? (

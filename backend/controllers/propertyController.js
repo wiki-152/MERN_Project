@@ -1,5 +1,6 @@
 const yup = require('yup');
 const propertyService = require('../services/propertyService');
+const listingOwnerService = require('../services/listingOwnerService');
 
 // Validation schema for property
 const propertySchema = yup.object().shape({
@@ -43,9 +44,32 @@ const propertySchema = yup.object().shape({
 
 // Create new property
 exports.createProperty = async (req, res) => {
+    //console.log("req.body froxc<dc<sdm backend: ", req.body.property);
+    
+    // Check if the request is coming in as FormData
+    let propertyData;
+    if (req.body.property) {
+        // If it's FormData, parse the property field
+        propertyData = JSON.parse(req.body.property);
+        // Use images and virtualTourImages directly from the request body
+        propertyData.images = propertyData.images || [];
+        propertyData.virtualTourImages = propertyData.virtualTourImages || [];
+    } else {
+        // If it's JSON, use it directly
+        propertyData = req.body;
+    }
+
+    // find the listingOwner by email and add the object id to the propertyData
+    const listingOwner = await listingOwnerService.getListingOwnerByEmail(propertyData.listedByEmail);
+    propertyData.listedBy = listingOwner._id;
+    //console.log("propertyDataMail: ", propertyData.listedBy);
+
+
+
     try {
-        await propertySchema.validate(req.body);
-        const property = await propertyService.createProperty(req.body);
+        // No more needed as done from frontend 
+        // await propertySchema.validate(propertyData);
+        const property = await propertyService.createProperty(propertyData);
         res.status(201).json(property);
     } catch (error) {
         res.status(400).json({ error: error.message });

@@ -61,3 +61,8 @@ exports.updateListingOwnerProfile = async (id, updateData) => {
 exports.deleteListingOwnerProfile = async (id) => {
     return await ListingOwner.findByIdAndDelete(id);
 };
+
+// Get Listing Owner by Email
+exports.getListingOwnerByEmail = async (email) => {
+    return await ListingOwner.findOne({ email });
+};
