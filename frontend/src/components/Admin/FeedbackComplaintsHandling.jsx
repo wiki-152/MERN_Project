@@ -8,7 +8,7 @@ const FeedbackComplaintsHandling = () => {
   useEffect(() => {
     const fetchFeedbacks = async () => {
       try {
-        const response = await axios.get('http://localhost:2469/api/feedback');
+        const response = await axios.get('https://mern-projectb.vercel.app/api/feedback');
         setFeedbacks(response.data);
       } catch (error) {
         console.error('Error fetching feedbacks:', error);
@@ -21,7 +21,7 @@ const FeedbackComplaintsHandling = () => {
   const markAsRead = async (id) => {
     try {
       console.log('Marking feedback as read:', id);
-      await axios.put(`http://localhost:2469/api/feedback/${id}`, { markedRead: true });
+      await axios.put(`https://mern-projectb.vercel.app/api/feedback/${id}`, { markedRead: true });
       // Update local state to reflect the change
       setFeedbacks(feedbacks.map(feedback => 
         feedback.id === id ? { ...feedback, markedRead: true } : feedback

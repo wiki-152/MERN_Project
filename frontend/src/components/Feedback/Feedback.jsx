@@ -19,7 +19,7 @@ const Support = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:2469/api/feedback/add', formData);
+      const response = await axios.post('https://mern-projectb.vercel.app/api/feedback/add', formData);
       console.log('Feedback sent successfully:', response.data);
       setSuccessMessage('Your feedback has been sent successfully!');
       setFormData({ name: '', email: '', feedbackType: '', message: '' });

@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import axios from 'axios';
 import useListingOwnerStore from './listingOwnerStore'; // Import the seller store
 
-const API_BASE_URL = 'http://localhost:2469/api/user';
+const API_BASE_URL = 'https://mern-projectb.vercel.app/api/user';
 
 const useUserStore = create((set) => ({
     user: JSON.parse(localStorage.getItem('user')) || null,

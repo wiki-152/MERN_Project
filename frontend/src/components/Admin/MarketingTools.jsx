@@ -8,7 +8,7 @@ const EmailCampaigns = () => {
 
   const handleSendCampaign = async () => {
     try {
-        const response = await axios.post('http://localhost:2469/api/user/send-emails', {
+        const response = await axios.post('https://mern-projectb.vercel.app/api/user/send-emails', {
             subject: 'Your Campaign Subject', // Replace with your desired subject
             body: message // Use the message from the input
         });
@@ -44,7 +44,7 @@ const DiscountCodes = () => {
 
   const handleSendDiscount = async () => {
     try {
-        const response = await axios.post('http://localhost:2469/api/user/send-emails', {
+        const response = await axios.post('https://mern-projectb.vercel.app/api/user/send-emails', {
             subject: 'Your Discount Code', // Replace with your desired subject
             body: message // Use the message from the input
         });

@@ -3,7 +3,7 @@ import axios from 'axios';
 import useUserStore from './userStore'; // Import the customer store
 import Cookies from 'js-cookie'; // Import js-cookie for cookie management
 
-const API_BASE_URL = 'http://localhost:2469/api/listingOwner';
+const API_BASE_URL = 'https://mern-projectb.vercel.app/api/listingOwner';
 
 const useListingOwnerStore = create((set) => {
     // Load initial state from cookies

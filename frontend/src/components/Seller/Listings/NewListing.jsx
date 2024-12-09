@@ -123,7 +123,7 @@ const NewListing = () => {
       const token = localStorage.getItem('listingOwnerStore');
       //console.log("sdfsd"+token);
       //console.log("formData: ", formData.get('property'));
-      const response = await axios.post('http://localhost:2469/api/property/property', formData, {
+      const response = await axios.post('https://mern-projectb.vercel.app/api/property/property', formData, {
         headers: {
           'Authorization': `Bearer ${token}`
         }

@@ -24,7 +24,7 @@ const useMarketplaceStore = create((set) => ({
         searchQuery[key] === undefined && delete searchQuery[key]
       );
 
-      const response = await axios.get('http://localhost:2469/api/marketplace/search', { 
+      const response = await axios.get('https://mern-projectb.vercel.app/api/marketplace/search', { 
         params: searchQuery 
       });
 
@@ -48,7 +48,7 @@ const useMarketplaceStore = create((set) => ({
   getItemDetails: async (id) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axios.get(`http://localhost:2469/api/marketplace/items/${id}`);
+      const response = await axios.get(`https://mern-projectb.vercel.app/api/marketplace/items/${id}`);
       console.log('Backend Response:', response.data);
       
       if (!response.data || !response.data._id) {
@@ -79,7 +79,7 @@ const useMarketplaceStore = create((set) => ({
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        `http://localhost:2469/api/marketplace/purchase/${itemId}`,
+        `https://mern-projectb.vercel.app/api/marketplace/purchase/${itemId}`,
         {}, // empty body
         {
           headers: {

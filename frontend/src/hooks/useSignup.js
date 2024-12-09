@@ -10,7 +10,7 @@ const useSignup = () => {
         try {
             setLoading(true);
             setError(null);
-            const response = await axios.post('http://localhost:2469/api/user/register', formData);
+            const response = await axios.post('https://mern-projectb.vercel.app/api/user/register', formData);
             setLoading(false);
             return response.data; // Return user data on success
         } catch (err) {

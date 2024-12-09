@@ -36,7 +36,7 @@ const usePropertyStore = create(
     searchProperties: async (params) => {
       set({ isLoading: true, error: null });
       try {
-        const response = await fetch('http://localhost:2469/api/property/propertyNoAuth/filters', {
+        const response = await fetch('https://mern-projectb.vercel.app/api/property/propertyNoAuth/filters', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ const usePropertyStore = create(
     fetchPropertyDetails: async (id) => {
       set({ isLoading: true, error: null });
       try {
-        const response = await fetch(`http://localhost:2469/api/property/property/${id}`);
+        const response = await fetch(`https://mern-projectb.vercel.app/api/property/property/${id}`);
         const data = await response.json();
         if (!response.ok) throw new Error(data.message);
         set({ propertyDetails: data, isLoading: false });

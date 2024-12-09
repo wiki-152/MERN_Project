@@ -20,7 +20,7 @@ const ContactUsCompany = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:2469/api/contactUs/add', formData);
+      const response = await axios.post('https://mern-projectb.vercel.app/api/contactUs/add', formData);
       console.log('Message sent successfully:', response.data);
       setSuccessMessage('Your message has been sent successfully!');
       setFormData({

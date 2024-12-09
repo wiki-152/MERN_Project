@@ -20,7 +20,7 @@ const ChatAssistance = () => {
       setIsLoading(true);
 
       try {
-        const response = await axios.post('http://localhost:2469/api/chat/chat', {
+        const response = await axios.post('https://mern-projectb.vercel.app/api/chat/chat', {
           query: inputMessage,
           location: null
         });
