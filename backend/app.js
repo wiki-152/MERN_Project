@@ -19,6 +19,8 @@ app.use('/api/chat', require('./routes/chat'));
 app.use('/api/contactUs', require('./routes/contactUs'));
 app.use('/api/feedback', require('./routes/feedbackCompRoutes'));
 
+app.use('/api/marketplace', require('./routes/marketplace')); 
+
 // Example route
 app.get('/', (req, res) => {
     res.send('API is running...');

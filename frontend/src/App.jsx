@@ -18,7 +18,9 @@ import PropertyDetails from './pages/Property/PropertyDetails';
 import PropertyResult from './pages/Property/PropertyResult';
 
 // ------------------------------------------------------------------------------------------------ User and Guest Marketplace
-import Marketplace from './components/Marketplace/Marrketplace'; // Marketplace------------------------------------
+import Marketplace from './components/Marketplace/Marketplace';
+import MarketplaceResults from './components/Marketplace/MarketplaceResults';
+import MarketplaceDetails from './pages/Marketplace/MarketplaceDetails';
 
 // ------------------------------------------------------------------------------------------------ User and Seller Settings
 import Settings from './components/Settings/Settings';
@@ -62,6 +64,7 @@ import Consulting from './components/Consulting/Consulting';
 import FAQsComponent from './components/FAQs/FAQsComponent';
 import NewsArticles from './components/NewsAndArticles/NewsAndArticles';
 import Support from './components/Feedback/Feedback';
+import PaymentPage from './pages/Payment/PaymentPage';
 
 function App() {
   return (
@@ -81,7 +84,7 @@ function App() {
         <Route path="/properties" element={<Properties />} />
         <Route path="/properties/:id" element={<PropertyDetails />} />
         <Route path="/properties/results" element={<PropertyResult />} />
-        
+
         <Route path="/virtual-tour" element={<VirtualTour />} />
 
         {/* User and Guest Properties */}
@@ -91,7 +94,10 @@ function App() {
 
 
         {/* User and Guest Marketplace */}
-        <Route path="/marketplace" element={<Marketplace />} /> {/* Marketplace------------------------------------ */}
+        <Route path="/marketplace" element={<Marketplace />} />
+        <Route path="/marketplace/results" element={<MarketplaceResults />} />
+        <Route path="/marketplace/:id" element={<MarketplaceDetails />} />
+        <Route path="/marketplace/item/:id" element={<MarketplaceDetails />} />
 
         {/* User and Seller Settings */}
         <Route path="/settings" element={<Settings />} />
@@ -143,6 +149,8 @@ function App() {
         <Route path="/faqs" element={<FAQsComponent />} />
         <Route path="/news" element={<NewsArticles />} />
         <Route path="/support" element={<Support />} />
+
+        <Route path="/payment" element={<PaymentPage />} />
 
 
 
