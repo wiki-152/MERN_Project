@@ -8,7 +8,14 @@ dotenv.config();
 connectDB();
 const app = express();
 
-app.use(cors());
+// For Vercel
+app.use(cors(
+    {
+        origin: 'https://www.tiefenreich.vercel.app',
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        credentials: true,
+    }
+));
 app.use(express.json());
 
 app.use('/api/admin', require('./routes/admin'));
