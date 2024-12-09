@@ -55,6 +55,9 @@ import UserVerificationManagement from './components/Admin/UserVerificationManag
 import PropertyCard from './components/PropertyCard/PropertyCard'; // Dummy components
 import VirtualTour from './components/VirtualTour/VirtualTour';
 
+// DUmmy
+import VirtualTourOld from './components/VirtualTour/VTold';
+
 // ------------------------------------------------------------------------------------------------ Footer Components
 import AboutUs from './components/AboutUs/AboutUs';
 import Services from './components/Services/Services';
@@ -86,6 +89,7 @@ function App() {
         <Route path="/properties/results" element={<PropertyResult />} />
 
         <Route path="/virtual-tour" element={<VirtualTour />} />
+        <Route path="/virtual-tour-old" element={<VirtualTourOld />} />
 
         {/* User and Guest Properties */}
         

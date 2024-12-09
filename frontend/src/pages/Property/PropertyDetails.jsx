@@ -8,6 +8,7 @@ import PropertyGallery from '../../components/Properties/PropertyGallery';
 import PropertyHeader from '../../components/Properties/PropertiesHeader';
 import PropertyDescription from '../../components/Properties/PropertyDescription';
 import ContactForm from '../../components/ContactSend/ContactSend';
+import VirtualTour from '../../components/VirtualTour/VirtualTour';
 
 // Custom marker icon
 const customIcon = new L.Icon({
@@ -24,6 +25,9 @@ export default function PropertyDetails() {
   const { fetchPropertyDetails, propertyDetails, isLoading, error } = usePropertyStore();
   const [geoLocation, setGeoLocation] = useState(null);
   const [geoError, setGeoError] = useState(null);
+  const [showVirtualTour, setShowVirtualTour] = useState(false);
+
+  console.log("propertyDetails: ", propertyDetails.virtualTourImages);
 
   useEffect(() => {
     fetchPropertyDetails(id);
@@ -54,12 +58,27 @@ export default function PropertyDetails() {
     }
   }, [propertyDetails]);
 
+  const handleVirtualTourClick = () => {
+    setShowVirtualTour(prevState => !prevState);
+  };
+
   if (isLoading) return <p className="text-white">Loading...</p>;
   if (error) return <p className="text-red-500">Error: {error}</p>;
   if (!propertyDetails) return <p className="text-white">No Property Found</p>;
 
   return (
     <div className="mx-auto p-8 bg-gray-800">
+      <button 
+        className="btn-virtual-tour mb-4"
+        onClick={handleVirtualTourClick}
+      >
+        {showVirtualTour ? 'Hide Virtual Tour' : 'Show Virtual Tour'}
+      </button>
+
+      {showVirtualTour && (
+        <VirtualTour virtualTourImages={propertyDetails.virtualTourImages} />
+      )}
+
       <div className="space-y-8">
         <PropertyGallery images={propertyDetails.images} />
         <PropertyHeader

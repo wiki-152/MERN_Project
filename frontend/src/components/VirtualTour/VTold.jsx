@@ -1,25 +1,12 @@
+// components/VirtualTour.js
 import React, { useState, useEffect, useRef } from 'react';
 import { Pannellum } from 'pannellum-react';
 import TourControls from './TourControls';
 import HotspotContent from './HotspotContent';
-import getTourConfig from './data/tourConfig'; // Updated import
+import tourConfig from './data/tconfigold';
 import './styles/virtualTour.css';
-import sample from '../../assets/imagesForVRTour/sample.jpg';
-import livingRoom from '../../assets/imagesForVRTour/living-room.jpg';
-import kitchen from '../../assets/imagesForVRTour/kitchen.jpg';
 
-const VirtualTour = ({ virtualTourImages }) => {
-  // Determine images to use. If virtualTourImages is an array, let's assume order: [entrance, livingRoom, kitchen]
-  // If it's structured differently, adjust accordingly.
-  const imagesToUse = {
-    entrance: virtualTourImages[0] || sample,
-    livingRoom: virtualTourImages[1] || livingRoom,
-    kitchen: virtualTourImages[2] || kitchen
-  };
-
-  // Now get the tour config using these images
-  const tourConfig = getTourConfig(imagesToUse);
-
+const VirtualTour = () => {
   const [currentScene, setCurrentScene] = useState(tourConfig.defaultScene);
   const [isLoading, setIsLoading] = useState(true);
   const [yaw, setYaw] = useState(180);
@@ -28,10 +15,11 @@ const VirtualTour = ({ virtualTourImages }) => {
   const viewerRef = useRef(null);
 
   useEffect(() => {
+    // Initialize viewer when component mounts
     setIsLoading(false);
   }, []);
 
-  // Control handlers remain the same
+  // Control handlers
   const handleZoomIn = () => {
     if (hfov > 40) {
       setHfov(prevHfov => prevHfov - 10);
@@ -63,16 +51,19 @@ const VirtualTour = ({ virtualTourImages }) => {
   const handleSceneChange = (sceneId) => {
     setIsLoading(true);
     setCurrentScene(sceneId);
+    // Reset view parameters for new scene
     setYaw(180);
     setPitch(10);
     setHfov(110);
     setIsLoading(false);
   };
 
+  // Handle hotspot clicks
   const handleHotspotClick = (evt, args) => {
     if (args.type === 'scene') {
       handleSceneChange(args.sceneId);
     } else if (args.type === 'info') {
+      // Show info hotspot content
       return (
         <HotspotContent 
           title={args.title}
@@ -90,12 +81,13 @@ const VirtualTour = ({ virtualTourImages }) => {
   }
 
   return (
-    <div className="virtual-tour-container mt-12">
+    <div className="virtual-tour-container">
+      {/* Main viewer */}
       <Pannellum
         ref={viewerRef}
         width="100%"
         height="500px"
-        image={tourConfig.scenes[currentScene].image} // using image from augmented tourConfig
+        image={tourConfig.scenes[currentScene].image}
         pitch={pitch}
         yaw={yaw}
         hfov={hfov}
@@ -110,6 +102,7 @@ const VirtualTour = ({ virtualTourImages }) => {
         sceneFadeDuration={1000}
       />
 
+      {/* Controls */}
       <TourControls
         onZoomIn={handleZoomIn}
         onZoomOut={handleZoomOut}
@@ -119,14 +112,15 @@ const VirtualTour = ({ virtualTourImages }) => {
         currentScene={currentScene}
         scenes={tourConfig.scenes}
         onSceneChange={handleSceneChange}
-        virtualTourImages={imagesToUse}
       />
 
+      {/* Scene info display */}
       <div className="scene-info -mt-4 ml-4">
         <h3>{tourConfig.scenes[currentScene].title}</h3>
         <p>{tourConfig.scenes[currentScene].description}</p>
       </div>
 
+      {/* Error boundary */}
       <div className="error-message" style={{ display: 'none' }}>
         Failed to load virtual tour. Please try refreshing the page.
       </div>
@@ -134,6 +128,7 @@ const VirtualTour = ({ virtualTourImages }) => {
   );
 };
 
+// Default props
 VirtualTour.defaultProps = {
   initialScene: 'entrance',
   showControls: true,

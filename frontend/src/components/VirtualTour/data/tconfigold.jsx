@@ -1,26 +1,21 @@
+// data/tourConfig.js
+
 import sample from '../../../assets/imagesForVRTour/sample.jpg';
 import livingRoom from '../../../assets/imagesForVRTour/living-room.jpg';
 import kitchen from '../../../assets/imagesForVRTour/kitchen.jpg';
 
-export default function getTourConfig(imagesToUse = {}) {
-  // imagesToUse should be an object like: 
-  // {
-  //   entrance: 'path_to_entrance_image.jpg' (optional),
-  //   livingRoom: 'path_to_living_room_image.jpg' (optional),
-  //   kitchen: 'path_to_kitchen_image.jpg' (optional)
-  // }
 
-  return {
+const tourConfig = {
     defaultScene: "entrance",
     autoLoad: true,
     sceneFadeDuration: 1000,
-
+    
     scenes: {
       entrance: {
         id: "entrance",
         title: "Entrance",
         description: "Main entrance area of the property",
-        image: imagesToUse.entrance || sample, // Use provided image or fallback
+        image: sample,
         hotSpots: [
           {
             pitch: -2.1,
@@ -40,12 +35,12 @@ export default function getTourConfig(imagesToUse = {}) {
           }
         ]
       },
-
+  
       livingRoom: {
         id: "livingRoom",
         title: "Living Room",
         description: "Spacious living room with natural lighting",
-        image: imagesToUse.livingRoom || livingRoom,  // Use provided image or fallback
+        image: livingRoom,
         hotSpots: [
           {
             pitch: 0,
@@ -73,12 +68,12 @@ export default function getTourConfig(imagesToUse = {}) {
           }
         ]
       },
-
+  
       kitchen: {
         id: "kitchen",
         title: "Kitchen",
         description: "Modern fully equipped kitchen",
-        image: imagesToUse.kitchen || kitchen, // Use provided image or fallback
+        image: kitchen, 
         hotSpots: [
           {
             pitch: -2.1,
@@ -99,7 +94,7 @@ export default function getTourConfig(imagesToUse = {}) {
         ]
       }
     },
-
+  
     // Tour settings
     settings: {
       compass: true,
@@ -114,7 +109,7 @@ export default function getTourConfig(imagesToUse = {}) {
       showZoomCtrl: true,
       keyboardZoom: true
     },
-
+  
     // Hotspot styles
     hotSpotStyles: {
       "custom-hotspot": {
@@ -127,7 +122,7 @@ export default function getTourConfig(imagesToUse = {}) {
         textShadow: "0 1px 4px rgba(0,0,0,0.6)"
       }
     },
-
+  
     // Property details that can be shown in info hotspots
     propertyDetails: {
       price: "$450,000",
@@ -144,4 +139,4 @@ export default function getTourConfig(imagesToUse = {}) {
       ]
     }
   };
-}
+  export default tourConfig;

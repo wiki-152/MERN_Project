@@ -10,7 +10,8 @@ const TourControls = ({
   onFullscreen,
   currentScene,
   scenes,
-  onSceneChange 
+  onSceneChange,
+  virtualImages
 }) => {
   return (
     <div className="tour-controls">
@@ -81,7 +82,7 @@ const TourControls = ({
 
       {/* Help Button */}
       <button 
-        className="help-btn "
+        className="help-btn"
         onClick={() => alert('Use controls to navigate. Click hotspots to move between rooms.')}
       >
         <i className="fas fa-question-circle"></i>
@@ -99,7 +100,8 @@ TourControls.defaultProps = {
   onRotateLeft: () => console.log('Rotate left'),
   onRotateRight: () => console.log('Rotate right'),
   onFullscreen: () => console.log('Toggle fullscreen'),
-  onSceneChange: () => console.log('Scene changed')
+  onSceneChange: () => console.log('Scene changed'),
+  virtualImages: []
 };
 
 export default TourControls;
