@@ -120,6 +120,9 @@ const extractCity = (query) => {
 router.post("/chat", async (req, res) => {
   try {
     const { query, location } = req.body;
+
+    console.log(query);
+    console.log(location);
     
     // Extract city from query or use location if provided
     const city = location || extractCity(query);
