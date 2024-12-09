@@ -25,6 +25,12 @@ const ChatAssistance = () => {
           location: null
         });
 
+        // With local host
+        // const response = await axios.post('http://localhost:2469/api/chat/chat', {
+        //   query: inputMessage,
+        //   location: null
+        // });
+
         const aiResponse = response.data.reply?.candidates?.[0]?.content?.parts?.[0]?.text;
         
         if (!aiResponse) {
