@@ -1,16 +1,13 @@
 const express = require('express');
-const multer = require('multer');
 const propertyController = require('../controllers/propertyController');
 const authMiddleware = require('../middleware/authMiddleware'); // For authentication TBD
 
 const router = express.Router();
 
-// Set up multer for file uploads
-const upload = multer({ dest: 'uploads/' }); // Specify your upload directory
 
 // Routes
 // old router.post('/property', authMiddleware, propertyController.createProperty);
-router.post('/property', authMiddleware, upload.fields([{ name: 'images', maxCount: 10 }, { name: 'virtualTourImages', maxCount: 5 }]), propertyController.createProperty);
+//router.post('/property', authMiddleware, upload.fields([{ name: 'images', maxCount: 10 }, { name: 'virtualTourImages', maxCount: 5 }]), propertyController.createProperty);
 router.get('/property', propertyController.getProperties);
 router.get('/property/:id', propertyController.getPropertyById);
 // router.put('/property/:id', authMiddleware, propertyController.updateProperty);
